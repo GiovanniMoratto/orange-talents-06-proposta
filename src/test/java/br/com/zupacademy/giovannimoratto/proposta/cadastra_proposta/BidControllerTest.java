@@ -1,4 +1,4 @@
-package br.com.zupacademy.giovannimoratto.proposta.add_bid;
+package br.com.zupacademy.giovannimoratto.proposta.cadastra_proposta;
 
 import com.google.gson.Gson;
 import org.junit.jupiter.api.Assertions;

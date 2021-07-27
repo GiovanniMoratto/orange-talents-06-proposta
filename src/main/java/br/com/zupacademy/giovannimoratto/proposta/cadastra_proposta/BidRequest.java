@@ -1,4 +1,4 @@
-package br.com.zupacademy.giovannimoratto.proposta.add_bid;
+package br.com.zupacademy.giovannimoratto.proposta.cadastra_proposta;
 
 import br.com.zupacademy.giovannimoratto.proposta.validations.annotations.CPForCNPJ;
 
