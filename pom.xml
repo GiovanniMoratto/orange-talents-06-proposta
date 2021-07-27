@@ -12,7 +12,7 @@
 	<artifactId>proposta</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>proposta</name>
-	<description>Implementando o desafio da casa da Proposta</description>
+	<description>Desafio Proposta Zup Academy</description>
 	<properties>
 		<java.version>11</java.version>
 	</properties>
@@ -42,8 +42,8 @@
 			<scope>runtime</scope>
 		</dependency>
 		<dependency>
-			<groupId>mysql</groupId>
-			<artifactId>mysql-connector-java</artifactId>
+			<groupId>org.postgresql</groupId>
+			<artifactId>postgresql</artifactId>
 			<scope>runtime</scope>
 		</dependency>
 		<dependency>
