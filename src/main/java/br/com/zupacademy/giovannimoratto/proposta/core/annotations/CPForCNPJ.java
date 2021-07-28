@@ -1,4 +1,4 @@
-package br.com.zupacademy.giovannimoratto.proposta.validations.annotations;
+package br.com.zupacademy.giovannimoratto.proposta.core.annotations;
 
 import org.hibernate.validator.constraints.ConstraintComposition;
 import org.hibernate.validator.constraints.br.CNPJ;
@@ -10,7 +10,8 @@ import java.lang.annotation.Documented;
 import java.lang.annotation.Retention;
 import java.lang.annotation.Target;
 
-import static java.lang.annotation.ElementType.*;
+import static java.lang.annotation.ElementType.FIELD;
+import static java.lang.annotation.ElementType.PARAMETER;
 import static java.lang.annotation.RetentionPolicy.RUNTIME;
 import static org.hibernate.validator.constraints.CompositionType.OR;
 
@@ -23,7 +24,7 @@ import static org.hibernate.validator.constraints.CompositionType.OR;
 @CNPJ
 @ConstraintComposition(OR)
 @Constraint(validatedBy = {})
-@Target({METHOD, FIELD, ANNOTATION_TYPE, CONSTRUCTOR, PARAMETER, TYPE})
+@Target({FIELD, PARAMETER})
 @Retention(RUNTIME)
 public @interface CPForCNPJ {
 

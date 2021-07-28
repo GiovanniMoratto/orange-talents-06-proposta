@@ -1,4 +1,4 @@
-package br.com.zupacademy.giovannimoratto.proposta.cadastra_proposta;
+package br.com.zupacademy.giovannimoratto.proposta.add_bid;
 
 import javax.persistence.*;
 import java.math.BigDecimal;

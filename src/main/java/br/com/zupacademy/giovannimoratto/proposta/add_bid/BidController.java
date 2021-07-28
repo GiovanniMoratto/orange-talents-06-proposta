@@ -1,4 +1,4 @@
-package br.com.zupacademy.giovannimoratto.proposta.cadastra_proposta;
+package br.com.zupacademy.giovannimoratto.proposta.add_bid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;

@@ -1,6 +1,7 @@
-package br.com.zupacademy.giovannimoratto.proposta.cadastra_proposta;
+package br.com.zupacademy.giovannimoratto.proposta.add_bid;
 
-import br.com.zupacademy.giovannimoratto.proposta.validations.annotations.CPForCNPJ;
+import br.com.zupacademy.giovannimoratto.proposta.core.annotations.CPForCNPJ;
+import br.com.zupacademy.giovannimoratto.proposta.core.annotations.DocumentExists;
 
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
@@ -15,6 +16,7 @@ import java.math.BigDecimal;
 public class BidRequest {
 
     /* Attributes */
+    @DocumentExists
     @CPForCNPJ
     @NotBlank
     private final String document;

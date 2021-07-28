@@ -1,9 +1,11 @@
-package br.com.zupacademy.giovannimoratto.proposta.validations.handler;
+package br.com.zupacademy.giovannimoratto.proposta.core.exceptions.handler.validations;
 
+import br.com.zupacademy.giovannimoratto.proposta.core.exceptions.ApiErrorException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
 import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.validation.FieldError;
 import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
@@ -13,6 +15,7 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 /**
  * @Author giovanni.moratto
@@ -43,4 +46,11 @@ public class HandlerExceptionValidation {
         });
         return filterException;
     }
+
+    @ExceptionHandler(ApiErrorException.class)
+    public ResponseEntity <?> handleApiErrorResponseException(ApiErrorException exception) {
+        return ResponseEntity.status(exception.getStatus()).body(Map.of("field",
+                exception.getField(), "error", exception.getMessage()));
+    }
+
 }

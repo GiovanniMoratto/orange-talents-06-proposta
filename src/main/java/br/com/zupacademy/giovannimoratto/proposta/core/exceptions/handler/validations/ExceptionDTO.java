@@ -1,9 +1,8 @@
-package br.com.zupacademy.giovannimoratto.proposta.validations.handler;
+package br.com.zupacademy.giovannimoratto.proposta.core.exceptions.handler.validations;
 
 /**
  * @Author giovanni.moratto
  */
-
 public class ExceptionDTO {
 
     /* Attributes */

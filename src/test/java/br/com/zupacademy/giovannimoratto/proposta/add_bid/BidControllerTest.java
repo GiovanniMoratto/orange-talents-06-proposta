@@ -1,4 +1,4 @@
-package br.com.zupacademy.giovannimoratto.proposta.cadastra_proposta;
+package br.com.zupacademy.giovannimoratto.proposta.add_bid;
 
 import com.google.gson.Gson;
 import org.junit.jupiter.api.Assertions;
@@ -69,16 +69,13 @@ class BidControllerTest {
     @ValueSource(strings = {"1419562", "333.333.333-40", "XX.XXX.XXX/0001-XX"})
     @DisplayName("400 Bad Request - When trying to POST with invalid CPF or CNPJ")
     void documentInvalidStatus400(String document) throws Exception {
-        String email = "email@email.com";
-        String name = "nome";
-        String address = "endereco";
-        BigDecimal salary = valueOf(2000.00);
         mockMvc.perform(post(urlTemplate)
-                .content(gson.toJson(new BidRequest(document, email, name, address, salary)))
+                .content(gson.toJson(new BidRequest(document, "email@email.com",
+                        "nome", "endereco", valueOf(2000.00))))
                 .characterEncoding("UTF-8")
                 .contentType(APPLICATION_JSON))
                 .andExpect(status().isBadRequest());
-        Assertions.assertTrue(repository.findByEmail(email).isEmpty());
+        Assertions.assertTrue(repository.findByEmail("email@email.com").isEmpty());
     }
 
     @ParameterizedTest
@@ -86,12 +83,9 @@ class BidControllerTest {
     @ValueSource(strings = {"invalidEmail.com", "@invalid.com", "@.com", "@invalid"})
     @DisplayName("400 Bad Request - When trying to POST with invalid EMAIL")
     void emailInvalidStatus400(String email) throws Exception {
-        String document = "574.170.670-34";
-        String name = "nome";
-        String address = "endereco";
-        BigDecimal salary = valueOf(2000.00);
         mockMvc.perform(post(urlTemplate)
-                .content(gson.toJson(new BidRequest(document, email, name, address, salary)))
+                .content(gson.toJson(new BidRequest("574.170.670-34", email,
+                        "nome", "endereco", valueOf(2000.00))))
                 .characterEncoding("UTF-8")
                 .contentType(APPLICATION_JSON))
                 .andExpect(status().isBadRequest());
@@ -102,81 +96,83 @@ class BidControllerTest {
     @NullAndEmptySource
     @DisplayName("400 Bad Request - When trying to POST with invalid NAME")
     void nameInvalidStatus400(String name) throws Exception {
-        String document = "574.170.670-34";
-        String email = "email@email.com";
-        String address = "endereco";
-        BigDecimal salary = valueOf(2000.00);
         mockMvc.perform(post(urlTemplate)
-                .content(gson.toJson(new BidRequest(document, email, name, address, salary)))
+                .content(gson.toJson(new BidRequest("574.170.670-34", "email@email.com",
+                        name, "endereco", valueOf(2000.00))))
                 .characterEncoding("UTF-8")
                 .contentType(APPLICATION_JSON))
                 .andExpect(status().isBadRequest());
-        Assertions.assertTrue(repository.findByEmail(email).isEmpty());
+        Assertions.assertTrue(repository.findByEmail("email@email.com").isEmpty());
     }
 
     @ParameterizedTest
     @NullAndEmptySource
     @DisplayName("400 Bad Request - When trying to POST with invalid ADDRESS")
     void addressInvalidStatus400(String address) throws Exception {
-        String document = "574.170.670-34";
-        String email = "email@email.com";
-        String name = "nome";
-        BigDecimal salary = valueOf(2000.00);
         mockMvc.perform(post(urlTemplate)
-                .content(gson.toJson(new BidRequest(document, email, name, address, salary)))
+                .content(gson.toJson(new BidRequest("574.170.670-34", "email@email.com",
+                        "nome", address, valueOf(2000.00))))
                 .characterEncoding("UTF-8")
                 .contentType(APPLICATION_JSON))
                 .andExpect(status().isBadRequest());
-        Assertions.assertTrue(repository.findByEmail(email).isEmpty());
+        Assertions.assertTrue(repository.findByEmail("email@email.com").isEmpty());
     }
 
     @ParameterizedTest
     @ValueSource(doubles = {-50.75, -5.11, -755.35})
     @DisplayName("400 Bad Request - When trying to POST with negative SALARY")
     void salaryInvalidStatus400(Double salary) throws Exception {
-        String document = "574.170.670-34";
-        String email = "email@email.com";
-        String name = "nome";
-        String address = "endereco";
         BigDecimal salaryConverted = BigDecimal.valueOf(salary);
         mockMvc.perform(post(urlTemplate)
-                .content(gson.toJson(new BidRequest(document, email, name, address, salaryConverted)))
+                .content(gson.toJson(new BidRequest("574.170.670-34", "email@email.com",
+                        "nome", "endereco", salaryConverted)))
                 .characterEncoding("UTF-8")
                 .contentType(APPLICATION_JSON))
                 .andExpect(status().isBadRequest());
-        Assertions.assertTrue(repository.findByEmail(email).isEmpty());
+        Assertions.assertTrue(repository.findByEmail("email@email.com").isEmpty());
     }
 
     @ParameterizedTest
     @NullSource
     @DisplayName("400 Bad Request - When trying to POST with null value of SALARY")
     void salaryNullStatus400(BigDecimal salary) throws Exception {
-        String document = "574.170.670-34";
-        String email = "email@email.com";
-        String name = "nome";
-        String address = "endereco";
         mockMvc.perform(post(urlTemplate)
-                .content(gson.toJson(new BidRequest(document, email, name, address, salary)))
+                .content(gson.toJson(new BidRequest("574.170.670-34", "email@email.com",
+                        "nome", "endereco", salary)))
                 .characterEncoding("UTF-8")
                 .contentType(APPLICATION_JSON))
                 .andExpect(status().isBadRequest());
-        Assertions.assertTrue(repository.findByEmail(email).isEmpty());
+        Assertions.assertTrue(repository.findByEmail("email@email.com").isEmpty());
     }
 
     @Test
     @DisplayName("201 Create - Succeed and persist the New Bid in the Database")
     void createNewBidStatus201() throws Exception {
-        String document = "574.170.670-34";
-        String email = "email@email.com";
-        String name = "nome";
-        String address = "endereco";
-        BigDecimal salary = valueOf(2000.00);
         mockMvc.perform(post(urlTemplate)
-                .content(gson.toJson(new BidRequest(document, email, name, address, salary)))
+                .content(gson.toJson(new BidRequest("574.170.670-34", "email@email.com",
+                        "nome", "endereco", valueOf(2000.00))))
                 .characterEncoding("UTF-8")
                 .contentType(APPLICATION_JSON))
                 .andExpect(status().isCreated()).andReturn();
-        Assertions.assertTrue(repository.findByEmail(email).isPresent());
+        Assertions.assertTrue(repository.findByEmail("email@email.com").isPresent());
+    }
+
+    @Test
+    @DisplayName("422 Unprocessable Entity - When trying to POST with duplicate DOCUMENT")
+    void documentDuplicateStatus422() throws Exception {
+        mockMvc.perform(post(urlTemplate)
+                .content(gson.toJson(new BidRequest("574.170.670-34", "email@email.com",
+                                "nome", "endereco", valueOf(2000.00))))
+                .characterEncoding("UTF-8")
+                .contentType(APPLICATION_JSON));
+
+        mockMvc.perform(post(urlTemplate)
+                .content(gson.toJson(new BidRequest("574.170.670-34", "email@email.com",
+                        "nome", "endereco", valueOf(2000.00))))
+                .characterEncoding("UTF-8")
+                .contentType(APPLICATION_JSON))
+                .andExpect(status().isUnprocessableEntity()).andReturn();
+        Assertions.assertEquals(1, repository.countByEmail("email@email.com"));
     }
 
 
