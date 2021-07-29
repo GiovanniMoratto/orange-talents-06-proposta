@@ -1,6 +1,8 @@
 package br.com.zupacademy.giovannimoratto.proposta.proposta;
 
 import br.com.zupacademy.giovannimoratto.proposta.cartao.AnaliseRequest;
+import br.com.zupacademy.giovannimoratto.proposta.cartao.CartaoModel;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
@@ -31,6 +33,9 @@ public class PropostaModel {
     private BigDecimal salario;
     @Enumerated(EnumType.STRING)
     private PropostaStatus status;
+    @JsonManagedReference
+    @OneToOne(cascade = CascadeType.MERGE, fetch = FetchType.EAGER)
+    private CartaoModel cartao;
 
     /* Constructors */
     @Deprecated
@@ -57,6 +62,10 @@ public class PropostaModel {
         this.status = status;
     }
 
+    public void adicionaCartao(CartaoModel cartao) {
+        this.cartao = cartao;
+    }
+
     /* Getters */
     public Long getId() {
         return id;
@@ -80,6 +89,10 @@ public class PropostaModel {
 
     public BigDecimal getSalario() {
         return salario;
+    }
+
+    public CartaoModel getCartao() {
+        return cartao;
     }
 
 }

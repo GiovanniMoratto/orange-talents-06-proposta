@@ -1,6 +1,6 @@
 package br.com.zupacademy.giovannimoratto.proposta.proposta;
 
-import br.com.zupacademy.giovannimoratto.proposta.feign.ConsultaDadosCliente;
+import br.com.zupacademy.giovannimoratto.proposta.feign.SolicitacaoFeignClient;
 import feign.FeignException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -29,7 +29,7 @@ public class PropostaController {
     private PropostaRepository repository;
 
     @Autowired
-    private ConsultaDadosCliente consulta;
+    private SolicitacaoFeignClient consulta;
 
     @PostMapping("/nova-proposta")
     @Transactional

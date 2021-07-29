@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RequestBody;
  */
 
 @FeignClient(url = "${solicitacao-analise-resource}", name = "analise")
-public interface ConsultaDadosCliente {
+public interface SolicitacaoFeignClient {
 
     @PostMapping
     void verificaRestricao(@RequestBody AnaliseRequest request);
