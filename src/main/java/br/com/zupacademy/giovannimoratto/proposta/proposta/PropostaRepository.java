@@ -1,5 +1,6 @@
 package br.com.zupacademy.giovannimoratto.proposta.proposta;
 
+import br.com.zupacademy.giovannimoratto.proposta.cartao.CartaoModel;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
@@ -17,6 +18,6 @@ public interface PropostaRepository extends JpaRepository <PropostaModel, Long> 
 
     int countByEmail(String email);
 
-    List <PropostaModel> findByStatus(PropostaStatus status);
+    List <PropostaModel> findByStatusAndCartao(PropostaStatus status, CartaoModel cartao);
 
 }

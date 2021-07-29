@@ -1,7 +1,7 @@
 package br.com.zupacademy.giovannimoratto.proposta.proposta;
 
 import br.com.zupacademy.giovannimoratto.proposta.core.annotations.CPForCNPJ;
-import br.com.zupacademy.giovannimoratto.proposta.core.annotations.DocumentExists;
+import br.com.zupacademy.giovannimoratto.proposta.core.annotations.DocumentoUnico;
 
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
@@ -16,7 +16,7 @@ import java.math.BigDecimal;
 public class PropostaRequest {
 
     /* Attributes */
-    @DocumentExists
+    @DocumentoUnico
     @CPForCNPJ
     @NotBlank
     private final String documento;

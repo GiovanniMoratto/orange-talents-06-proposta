@@ -1,6 +1,6 @@
 package br.com.zupacademy.giovannimoratto.proposta.core.annotations;
 
-import br.com.zupacademy.giovannimoratto.proposta.core.validators.DocumentExistsValidator;
+import br.com.zupacademy.giovannimoratto.proposta.core.validators.DocumentoUnicoValidator;
 
 import javax.validation.Constraint;
 import javax.validation.Payload;
@@ -16,10 +16,10 @@ import static java.lang.annotation.RetentionPolicy.RUNTIME;
  */
 
 @Documented
-@Constraint(validatedBy = {DocumentExistsValidator.class})
+@Constraint(validatedBy = {DocumentoUnicoValidator.class})
 @Target(FIELD)
 @Retention(RUNTIME)
-public @interface DocumentExists {
+public @interface DocumentoUnico {
 
     String message() default "Este documento já está vinculado a uma proposta!";
 

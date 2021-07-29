@@ -11,6 +11,7 @@ class PropostaApplicationTests {
 
 	@Test
 	void contextLoads() {
+		PropostaApplication.main(new String[0]);
 	}
 
 }

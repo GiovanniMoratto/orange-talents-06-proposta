@@ -6,5 +6,5 @@ package br.com.zupacademy.giovannimoratto.proposta.proposta;
 
 public enum PropostaStatus {
     ELEGIVEL,
-    NAO_ELEGIVEL;
+    NAO_ELEGIVEL
 }

@@ -1,10 +1,13 @@
 package br.com.zupacademy.giovannimoratto.proposta.cartao;
 
 import br.com.zupacademy.giovannimoratto.proposta.proposta.PropostaModel;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Positive;
+import java.math.BigDecimal;
+import java.time.LocalDateTime;
 
 /**
  * @Author giovanni.moratto
@@ -12,21 +15,17 @@ import javax.validation.constraints.Positive;
 
 public class CartaoResponse {
 
-    @NotBlank
-    private String id;
+    @JsonProperty("id")
+    private final String numero;
+    private final Long idProposta;
 
-    @NotNull
-    @Positive
-    private Long idProposta;
-
-
-    public CartaoResponse(String id, Long idProposta) {
-        this.id = id;
+    public CartaoResponse(String numero, Long idProposta) {
+        this.numero = numero;
         this.idProposta = idProposta;
     }
 
-    public String getId() {
-        return id;
+    public String getNumero() {
+        return numero;
     }
 
     public Long getIdProposta() {
@@ -34,7 +33,7 @@ public class CartaoResponse {
     }
 
     public CartaoModel toModel(PropostaModel proposta) {
-        return new CartaoModel(id, proposta);
+        return new CartaoModel(numero, proposta);
     }
 
 }

@@ -21,7 +21,7 @@ public class PropostaModel {
     @Id
     @GeneratedValue(strategy = IDENTITY)
     private Long id;
-    @Column(nullable = false)
+    @Column(nullable = false, unique = true)
     private String documento;
     @Column(nullable = false)
     private String email;
@@ -35,6 +35,7 @@ public class PropostaModel {
     private PropostaStatus status;
     @JsonManagedReference
     @OneToOne(cascade = CascadeType.MERGE, fetch = FetchType.EAGER)
+    @JoinColumn(unique = true)
     private CartaoModel cartao;
 
     /* Constructors */
@@ -52,12 +53,12 @@ public class PropostaModel {
     }
 
     /* Methods */
-    // Instancia uma classe AnaliseRequest usando os dados da PropostaModel
+    // Instância uma classe AnaliseRequest usando os dados da PropostaModel
     public AnaliseRequest toAnalise() {
         return new AnaliseRequest(documento, nome, id.toString());
     }
 
-    // Adiciona a restricição encontrada na consulta
+    // Adiciona a restrição encontrada na consulta
     public void adicionaRestricao(PropostaStatus status) {
         this.status = status;
     }

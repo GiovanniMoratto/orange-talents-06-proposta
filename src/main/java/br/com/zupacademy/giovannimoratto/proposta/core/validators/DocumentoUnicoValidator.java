@@ -1,6 +1,6 @@
 package br.com.zupacademy.giovannimoratto.proposta.core.validators;
 
-import br.com.zupacademy.giovannimoratto.proposta.core.annotations.DocumentExists;
+import br.com.zupacademy.giovannimoratto.proposta.core.annotations.DocumentoUnico;
 import org.springframework.web.server.ResponseStatusException;
 
 import javax.persistence.EntityManager;
@@ -15,13 +15,13 @@ import static org.springframework.http.HttpStatus.UNPROCESSABLE_ENTITY;
  * @Author giovanni.moratto
  */
 
-public class DocumentExistsValidator implements ConstraintValidator <DocumentExists, String> {
+public class DocumentoUnicoValidator implements ConstraintValidator <DocumentoUnico, String> {
 
     @PersistenceContext
     private EntityManager em;
 
     @Override
-    public void initialize(DocumentExists constraintAnnotation) {
+    public void initialize(DocumentoUnico constraintAnnotation) {
         ConstraintValidator.super.initialize(constraintAnnotation);
     }
 
