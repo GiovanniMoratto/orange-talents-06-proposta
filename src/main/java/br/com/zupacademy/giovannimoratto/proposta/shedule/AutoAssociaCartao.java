@@ -1,5 +1,6 @@
 package br.com.zupacademy.giovannimoratto.proposta.shedule;
 
+import br.com.zupacademy.giovannimoratto.proposta.cartao.CartaoModel;
 import br.com.zupacademy.giovannimoratto.proposta.cartao.CartaoResponse;
 import br.com.zupacademy.giovannimoratto.proposta.feign.CartoesFeignClient;
 import br.com.zupacademy.giovannimoratto.proposta.proposta.PropostaModel;
@@ -27,7 +28,7 @@ public class AutoAssociaCartao {
     @Autowired
     private PropostaRepository repository;
     @Autowired
-    private CartoesFeignClient cartao;
+    private CartoesFeignClient feignClient;
 
     @Scheduled(fixedDelayString = "${scheduled-cartao.time}")
     @Transactional
@@ -37,12 +38,16 @@ public class AutoAssociaCartao {
 
         propostas.forEach(proposta -> {
             try {
-                CartaoResponse novoCartao = cartao.associaCartao(proposta.getId().toString());
-                proposta.adicionaCartao(novoCartao.toModel(proposta));
+                CartaoModel novoCartao = feignClient.associaCartao(proposta.toAnalise()).toModel(repository);
+                //CartaoResponse novoCartao = cartao.associaCartao(proposta.toAnalise());
+                //CartaoResponse novoCartao = cartao.buscaCartao(proposta.getId().toString());
+                proposta.adicionaCartao(novoCartao);
                 repository.save(proposta);
-                log.info("Proposta de ID {} associada ao cartão de número {}", proposta.getId(), novoCartao.getNumero());
-            } catch (FeignException e){
-                log.info("Não foi possível criar um cartão no momento. Motivo: {}, Resposta: {}", e.getMessage(), e.contentUTF8());
+                log.info("Proposta de ID {} associada ao cartão de número {}", proposta.getId(),
+                        novoCartao.getNumero());
+            } catch (FeignException e) {
+                log.info("Não foi possível criar um cartão no momento. Motivo: {}, Resposta: {}", e.getMessage(),
+                        e.contentUTF8());
             }
         });
     }
