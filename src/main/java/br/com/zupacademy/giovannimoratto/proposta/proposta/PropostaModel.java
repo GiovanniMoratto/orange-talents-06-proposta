@@ -37,7 +37,7 @@ public class PropostaModel {
     public PropostaModel() {
     }
 
-    // Set PropostaRequest.class method values in PropostaModel.class
+    // Defini os valores do método da PropostaRequest.class em PropostaModel.class
     public PropostaModel(String documento, String email, String nome, String endereco, BigDecimal salario) {
         this.documento = documento;
         this.email = email;
@@ -47,10 +47,12 @@ public class PropostaModel {
     }
 
     /* Methods */
-    public AnaliseRequest enviaDados() {
+    // Instancia uma classe AnaliseRequest usando os dados da PropostaModel
+    public AnaliseRequest toAnalise() {
         return new AnaliseRequest(documento, nome, id.toString());
     }
 
+    // Adiciona a restricição encontrada na consulta
     public void adicionaRestricao(PropostaStatus status) {
         this.status = status;
     }

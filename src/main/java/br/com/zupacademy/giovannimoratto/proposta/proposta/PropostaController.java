@@ -44,7 +44,7 @@ public class PropostaController {
 
     private void verificaRestricao(PropostaModel novaProposta) {
         try {
-            consulta.verificaRestricao(novaProposta.enviaDados());
+            consulta.verificaRestricao(novaProposta.toAnalise());
             novaProposta.adicionaRestricao(ELEGIVEL);
             repository.save(novaProposta);
         } catch (FeignException.UnprocessableEntity e) {

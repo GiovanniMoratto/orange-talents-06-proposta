@@ -16,6 +16,4 @@ public interface PropostaRepository extends JpaRepository <PropostaModel, Long> 
 
     int countByEmail(String email);
 
-    Optional<PropostaModel> findByDocumento(String documento);
-
 }

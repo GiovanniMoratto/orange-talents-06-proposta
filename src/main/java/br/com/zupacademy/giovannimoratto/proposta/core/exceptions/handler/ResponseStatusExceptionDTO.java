@@ -5,22 +5,19 @@ import java.util.Collection;
 /**
  * @Author giovanni.moratto
  */
+public class ResponseStatusExceptionDTO {
 
-public class ExceptionDTO {
+    /* Attributes */
+    private final Collection <String> messages;
 
-    private Collection <String> messages;
-
-    public ExceptionDTO(Collection <String> messages) {
-        super();
+    /* Constructor */
+    public ResponseStatusExceptionDTO(Collection <String> messages) {
         this.messages = messages;
     }
 
+    /* Getters */
     public Collection <String> getMessages() {
         return messages;
-    }
-
-    public void setMessages(Collection <String> messages) {
-        this.messages = messages;
     }
 
 }

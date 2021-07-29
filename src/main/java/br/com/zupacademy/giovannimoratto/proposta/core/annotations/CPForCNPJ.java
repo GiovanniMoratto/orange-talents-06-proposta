@@ -30,7 +30,7 @@ import static org.hibernate.validator.constraints.CompositionType.OR;
 @Retention(RUNTIME)
 public @interface CPForCNPJ {
 
-    String message() default "Este campo deve ter um formato válido de CPF ou CNPJ";
+    String message() default "Campo deve possuir formato de CPF ou CNPJ válido";
 
     Class <?>[] groups() default {};
 
