@@ -21,7 +21,7 @@ import static java.lang.annotation.RetentionPolicy.RUNTIME;
 @Retention(RUNTIME)
 public @interface DocumentExists {
 
-    String message() default "This Document value already exist!";
+    String message() default "Este documento já está vinculado a uma proposta!";
 
     Class <?>[] groups() default {};
 

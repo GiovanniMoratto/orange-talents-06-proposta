@@ -1,4 +1,4 @@
-package br.com.zupacademy.giovannimoratto.proposta.add_bid;
+package br.com.zupacademy.giovannimoratto.proposta.proposta;
 
 import br.com.zupacademy.giovannimoratto.proposta.core.annotations.CPForCNPJ;
 import br.com.zupacademy.giovannimoratto.proposta.core.annotations.DocumentExists;
@@ -13,36 +13,36 @@ import java.math.BigDecimal;
  * @Author giovanni.moratto
  */
 
-public class BidRequest {
+public class PropostaRequest {
 
     /* Attributes */
     @DocumentExists
     @CPForCNPJ
     @NotBlank
-    private final String document;
+    private final String documento;
     @Email
     @NotBlank
     private final String email;
     @NotBlank
-    private final String name;
+    private final String nome;
     @NotBlank
-    private final String address;
+    private final String endereco;
     @NotNull
     @Positive
-    private final BigDecimal salary;
+    private final BigDecimal salario;
 
     /* Constructors */
-    public BidRequest(String document, String email, String name, String address, BigDecimal salary) {
-        this.document = document;
+    public PropostaRequest(String documento, String email, String nome, String endereco, BigDecimal salario) {
+        this.documento = documento;
         this.email = email;
-        this.name = name;
-        this.address = address;
-        this.salary = salary;
+        this.nome = nome;
+        this.endereco = endereco;
+        this.salario = salario;
     }
 
     /* Methods */
-    public BidModel toModel() {
-        return new BidModel(document, email, name, address, salary);
+    public PropostaModel toModel() {
+        return new PropostaModel(documento, email, nome, endereco, salario);
     }
 
 }

@@ -6,6 +6,7 @@ import org.hibernate.validator.constraints.br.CPF;
 
 import javax.validation.Constraint;
 import javax.validation.Payload;
+import javax.validation.ReportAsSingleViolation;
 import java.lang.annotation.Documented;
 import java.lang.annotation.Retention;
 import java.lang.annotation.Target;
@@ -23,12 +24,13 @@ import static org.hibernate.validator.constraints.CompositionType.OR;
 @CPF
 @CNPJ
 @ConstraintComposition(OR)
+@ReportAsSingleViolation
 @Constraint(validatedBy = {})
 @Target({FIELD, PARAMETER})
 @Retention(RUNTIME)
 public @interface CPForCNPJ {
 
-    String message() default "This field must have a valid format of CPF or CNPJ";
+    String message() default "Este campo deve ter um formato válido de CPF ou CNPJ";
 
     Class <?>[] groups() default {};
 

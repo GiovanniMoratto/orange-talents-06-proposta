@@ -1,4 +1,4 @@
-package br.com.zupacademy.giovannimoratto.proposta.add_bid;
+package br.com.zupacademy.giovannimoratto.proposta.proposta;
 
 import com.google.gson.Gson;
 import org.junit.jupiter.api.Assertions;
@@ -30,7 +30,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @RunWith(SpringJUnit4ClassRunner.class)
 @SpringBootTest
 @AutoConfigureMockMvc
-class BidControllerTest {
+class PropostaControllerTest {
 
     private final String urlTemplate = "/api/nova-proposta";
     @Autowired
@@ -38,7 +38,7 @@ class BidControllerTest {
     @Autowired
     private Gson gson;
     @Autowired
-    private BidRepository repository;
+    private PropostaRepository repository;
 
     @BeforeEach
     void setUp() {
@@ -68,9 +68,9 @@ class BidControllerTest {
     @NullAndEmptySource
     @ValueSource(strings = {"1419562", "333.333.333-40", "XX.XXX.XXX/0001-XX"})
     @DisplayName("400 Bad Request - When trying to POST with invalid CPF or CNPJ")
-    void documentInvalidStatus400(String document) throws Exception {
+    void documentInvalidStatus400(String documento) throws Exception {
         mockMvc.perform(post(urlTemplate)
-                .content(gson.toJson(new BidRequest(document, "email@email.com",
+                .content(gson.toJson(new PropostaRequest(documento, "email@email.com",
                         "nome", "endereco", valueOf(2000.00))))
                 .characterEncoding("UTF-8")
                 .contentType(APPLICATION_JSON))
@@ -84,7 +84,7 @@ class BidControllerTest {
     @DisplayName("400 Bad Request - When trying to POST with invalid EMAIL")
     void emailInvalidStatus400(String email) throws Exception {
         mockMvc.perform(post(urlTemplate)
-                .content(gson.toJson(new BidRequest("574.170.670-34", email,
+                .content(gson.toJson(new PropostaRequest("574.170.670-34", email,
                         "nome", "endereco", valueOf(2000.00))))
                 .characterEncoding("UTF-8")
                 .contentType(APPLICATION_JSON))
@@ -95,10 +95,10 @@ class BidControllerTest {
     @ParameterizedTest
     @NullAndEmptySource
     @DisplayName("400 Bad Request - When trying to POST with invalid NAME")
-    void nameInvalidStatus400(String name) throws Exception {
+    void nameInvalidStatus400(String nome) throws Exception {
         mockMvc.perform(post(urlTemplate)
-                .content(gson.toJson(new BidRequest("574.170.670-34", "email@email.com",
-                        name, "endereco", valueOf(2000.00))))
+                .content(gson.toJson(new PropostaRequest("574.170.670-34", "email@email.com",
+                        nome, "endereco", valueOf(2000.00))))
                 .characterEncoding("UTF-8")
                 .contentType(APPLICATION_JSON))
                 .andExpect(status().isBadRequest());
@@ -108,10 +108,10 @@ class BidControllerTest {
     @ParameterizedTest
     @NullAndEmptySource
     @DisplayName("400 Bad Request - When trying to POST with invalid ADDRESS")
-    void addressInvalidStatus400(String address) throws Exception {
+    void addressInvalidStatus400(String endereco) throws Exception {
         mockMvc.perform(post(urlTemplate)
-                .content(gson.toJson(new BidRequest("574.170.670-34", "email@email.com",
-                        "nome", address, valueOf(2000.00))))
+                .content(gson.toJson(new PropostaRequest("574.170.670-34", "email@email.com",
+                        "nome", endereco, valueOf(2000.00))))
                 .characterEncoding("UTF-8")
                 .contentType(APPLICATION_JSON))
                 .andExpect(status().isBadRequest());
@@ -121,11 +121,11 @@ class BidControllerTest {
     @ParameterizedTest
     @ValueSource(doubles = {-50.75, -5.11, -755.35})
     @DisplayName("400 Bad Request - When trying to POST with negative SALARY")
-    void salaryInvalidStatus400(Double salary) throws Exception {
-        BigDecimal salaryConverted = BigDecimal.valueOf(salary);
+    void salaryInvalidStatus400(Double salario) throws Exception {
+        BigDecimal salarioConvertido = BigDecimal.valueOf(salario);
         mockMvc.perform(post(urlTemplate)
-                .content(gson.toJson(new BidRequest("574.170.670-34", "email@email.com",
-                        "nome", "endereco", salaryConverted)))
+                .content(gson.toJson(new PropostaRequest("574.170.670-34", "email@email.com",
+                        "nome", "endereco", salarioConvertido)))
                 .characterEncoding("UTF-8")
                 .contentType(APPLICATION_JSON))
                 .andExpect(status().isBadRequest());
@@ -135,10 +135,10 @@ class BidControllerTest {
     @ParameterizedTest
     @NullSource
     @DisplayName("400 Bad Request - When trying to POST with null value of SALARY")
-    void salaryNullStatus400(BigDecimal salary) throws Exception {
+    void salaryNullStatus400(BigDecimal salario) throws Exception {
         mockMvc.perform(post(urlTemplate)
-                .content(gson.toJson(new BidRequest("574.170.670-34", "email@email.com",
-                        "nome", "endereco", salary)))
+                .content(gson.toJson(new PropostaRequest("574.170.670-34", "email@email.com",
+                        "nome", "endereco", salario)))
                 .characterEncoding("UTF-8")
                 .contentType(APPLICATION_JSON))
                 .andExpect(status().isBadRequest());
@@ -149,7 +149,7 @@ class BidControllerTest {
     @DisplayName("201 Create - Succeed and persist the New Bid in the Database")
     void createNewBidStatus201() throws Exception {
         mockMvc.perform(post(urlTemplate)
-                .content(gson.toJson(new BidRequest("574.170.670-34", "email@email.com",
+                .content(gson.toJson(new PropostaRequest("574.170.670-34", "email@email.com",
                         "nome", "endereco", valueOf(2000.00))))
                 .characterEncoding("UTF-8")
                 .contentType(APPLICATION_JSON))
@@ -161,13 +161,13 @@ class BidControllerTest {
     @DisplayName("422 Unprocessable Entity - When trying to POST with duplicate DOCUMENT")
     void documentDuplicateStatus422() throws Exception {
         mockMvc.perform(post(urlTemplate)
-                .content(gson.toJson(new BidRequest("574.170.670-34", "email@email.com",
+                .content(gson.toJson(new PropostaRequest("574.170.670-34", "email@email.com",
                                 "nome", "endereco", valueOf(2000.00))))
                 .characterEncoding("UTF-8")
                 .contentType(APPLICATION_JSON));
 
         mockMvc.perform(post(urlTemplate)
-                .content(gson.toJson(new BidRequest("574.170.670-34", "email@email.com",
+                .content(gson.toJson(new PropostaRequest("574.170.670-34", "email@email.com",
                         "nome", "endereco", valueOf(2000.00))))
                 .characterEncoding("UTF-8")
                 .contentType(APPLICATION_JSON))
