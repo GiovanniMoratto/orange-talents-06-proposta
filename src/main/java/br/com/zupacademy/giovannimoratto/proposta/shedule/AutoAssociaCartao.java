@@ -9,13 +9,16 @@ import feign.FeignException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
+import org.springframework.web.server.ResponseStatusException;
 
 import javax.transaction.Transactional;
 import java.util.List;
 
 import static br.com.zupacademy.giovannimoratto.proposta.proposta.PropostaStatus.ELEGIVEL;
+import static org.springframework.http.HttpStatus.SERVICE_UNAVAILABLE;
 
 /**
  * @Author giovanni.moratto
@@ -38,16 +41,13 @@ public class AutoAssociaCartao {
 
         propostas.forEach(proposta -> {
             try {
-                CartaoModel novoCartao = feignClient.associaCartao(proposta.toAnalise()).toModel(repository);
-                //CartaoResponse novoCartao = cartao.associaCartao(proposta.toAnalise());
-                //CartaoResponse novoCartao = cartao.buscaCartao(proposta.getId().toString());
-                proposta.adicionaCartao(novoCartao);
+                CartaoResponse novoCartao = feignClient.associaCartao(proposta.toAnalise());
+                proposta.adicionaCartao(novoCartao.toModel(proposta));
                 repository.save(proposta);
                 log.info("Proposta de ID {} associada ao cartão de número {}", proposta.getId(),
                         novoCartao.getNumero());
             } catch (FeignException e) {
-                log.info("Não foi possível criar um cartão no momento. Motivo: {}, Resposta: {}", e.getMessage(),
-                        e.contentUTF8());
+                throw new ResponseStatusException(SERVICE_UNAVAILABLE, "Serviço indisponivel!");
             }
         });
     }

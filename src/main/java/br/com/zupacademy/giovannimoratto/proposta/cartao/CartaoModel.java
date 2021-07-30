@@ -1,11 +1,9 @@
 package br.com.zupacademy.giovannimoratto.proposta.cartao;
 
 import br.com.zupacademy.giovannimoratto.proposta.proposta.PropostaModel;
-import br.com.zupacademy.giovannimoratto.proposta.proposta.PropostaRepository;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 
 import javax.persistence.*;
-
 import java.time.LocalDateTime;
 
 import static javax.persistence.GenerationType.IDENTITY;
