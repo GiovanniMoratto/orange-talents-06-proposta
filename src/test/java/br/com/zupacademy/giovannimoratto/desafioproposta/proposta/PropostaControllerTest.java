@@ -32,7 +32,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @AutoConfigureMockMvc
 class PropostaControllerTest {
 
-    private final String urlTemplate = "/api/nova-desafioproposta";
+    private final String urlTemplate = "/api/nova-proposta";
     @Autowired
     private MockMvc mockMvc;
     @Autowired

@@ -27,18 +27,17 @@ public class PropostaController {
 
     @Autowired
     private PropostaRepository repository;
-
     @Autowired
     private SolicitacaoFeignClient consulta;
 
-    @PostMapping("/nova-desafioproposta")
+    @PostMapping("/nova-proposta")
     @Transactional
     public ResponseEntity <PropostaResponse> cadastraProposta(@RequestBody @Valid PropostaRequest request,
                                                               UriComponentsBuilder uriBuilder) {
         PropostaModel novaProposta = request.toModel();
         repository.save(novaProposta);
         verificaRestricao(novaProposta);
-        URI uri = uriBuilder.path("/desafioproposta/{id}").buildAndExpand(novaProposta.getId()).toUri();
+        URI uri = uriBuilder.path("/proposta/{id}").buildAndExpand(novaProposta.getId()).toUri();
         return ResponseEntity.created(uri).body(new PropostaResponse(novaProposta));
     }
 
