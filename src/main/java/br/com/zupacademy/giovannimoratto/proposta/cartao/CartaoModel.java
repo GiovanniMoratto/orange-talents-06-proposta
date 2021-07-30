@@ -33,25 +33,12 @@ public class CartaoModel {
     public CartaoModel() {
     }
 
-    public CartaoModel(String id, PropostaModel proposta) {
-        this.numero = id;
-        this.proposta = proposta;
-    }
-
     public CartaoModel(String numero, LocalDateTime emitidoEm, String titular, Integer limite, PropostaModel proposta) {
         this.numero = numero;
         this.emitidoEm = emitidoEm;
         this.titular = titular;
         this.limite = limite;
         this.proposta = proposta;
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public String getNumero() {
-        return numero;
     }
 
     public PropostaModel getProposta() {

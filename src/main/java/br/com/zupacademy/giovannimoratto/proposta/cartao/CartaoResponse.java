@@ -32,37 +32,8 @@ public class CartaoResponse {
     }
 
     /* Methods */
-    public CartaoModel toModel(PropostaRepository propostaRepository) {
-
-        PropostaModel proposta = propostaRepository.findById(Long.parseLong(idProposta)).orElseThrow(() ->
-                new ResponseStatusException(HttpStatus.NOT_FOUND, "Essa proposta não existe"));
-
-        return new CartaoModel(numero, emitidoEm, titular, limite, proposta);
-    }
-
     public CartaoModel toModel(PropostaModel proposta) {
         return new CartaoModel(numero, emitidoEm, titular, limite, proposta);
-    }
-
-    /* Getters */
-    public String getNumero() {
-        return numero;
-    }
-
-    public LocalDateTime getEmitidoEm() {
-        return emitidoEm;
-    }
-
-    public String getTitular() {
-        return titular;
-    }
-
-    public Integer getLimite() {
-        return limite;
-    }
-
-    public String getIdProposta() {
-        return idProposta;
     }
 
 }

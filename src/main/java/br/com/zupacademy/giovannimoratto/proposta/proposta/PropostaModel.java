@@ -92,8 +92,4 @@ public class PropostaModel {
         return salario;
     }
 
-    public CartaoModel getCartao() {
-        return cartao;
-    }
-
 }
