@@ -4,10 +4,8 @@ import br.com.zupacademy.giovannimoratto.desafioproposta.feign.SolicitacaoFeignC
 import feign.FeignException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.server.ResponseStatusException;
 import org.springframework.web.util.UriComponentsBuilder;
 
 import javax.transaction.Transactional;
@@ -16,6 +14,7 @@ import java.net.URI;
 
 import static br.com.zupacademy.giovannimoratto.desafioproposta.proposta.PropostaStatus.ELEGIVEL;
 import static br.com.zupacademy.giovannimoratto.desafioproposta.proposta.PropostaStatus.NAO_ELEGIVEL;
+import static org.springframework.http.HttpStatus.NOT_FOUND;
 
 /**
  * @Author giovanni.moratto
@@ -32,13 +31,13 @@ public class PropostaController {
 
     @PostMapping("/nova-proposta")
     @Transactional
-    public ResponseEntity <PropostaResponse> cadastraProposta(@RequestBody @Valid PropostaRequest request,
-                                                              UriComponentsBuilder uriBuilder) {
+    public ResponseEntity <?> cadastraProposta(@RequestBody @Valid PropostaRequest request,
+                                               UriComponentsBuilder uriBuilder) {
         PropostaModel novaProposta = request.toModel();
         repository.save(novaProposta);
         verificaRestricao(novaProposta);
         URI uri = uriBuilder.path("/proposta/{id}").buildAndExpand(novaProposta.getId()).toUri();
-        return ResponseEntity.created(uri).body(new PropostaResponse(novaProposta));
+        return ResponseEntity.created(uri).build();
     }
 
     private void verificaRestricao(PropostaModel novaProposta) {
@@ -50,6 +49,13 @@ public class PropostaController {
             novaProposta.adicionaRestricao(NAO_ELEGIVEL);
             repository.save(novaProposta);
         }
+    }
+
+    @GetMapping("/proposta/{id}")
+    public ResponseEntity <PropostaResponse> buscaProposta(@PathVariable Long id) {
+        PropostaModel proposta = repository.findById(id).orElseThrow(() ->
+                new ResponseStatusException(NOT_FOUND, "Proposta não encontrada."));
+        return ResponseEntity.ok(new PropostaResponse(proposta));
     }
 
 }

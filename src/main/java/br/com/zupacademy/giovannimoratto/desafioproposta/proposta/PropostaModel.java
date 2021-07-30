@@ -92,4 +92,12 @@ public class PropostaModel {
         return salario;
     }
 
+    public PropostaStatus getStatus() {
+        return status;
+    }
+
+    public CartaoModel getCartao() {
+        return cartao;
+    }
+
 }

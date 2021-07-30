@@ -14,6 +14,7 @@ public class PropostaResponse {
     private final String nome;
     private final String endereco;
     private final BigDecimal salario;
+    private final PropostaStatus status;
 
     /* Constructors */
     public PropostaResponse(PropostaModel proposta) {
@@ -22,6 +23,7 @@ public class PropostaResponse {
         this.nome = proposta.getNome();
         this.endereco = proposta.getEndereco();
         this.salario = proposta.getSalario();
+        this.status = proposta.getStatus();
     }
 
     /* Getters */
@@ -43,6 +45,10 @@ public class PropostaResponse {
 
     public BigDecimal getSalario() {
         return salario;
+    }
+
+    public PropostaStatus getStatus() {
+        return status;
     }
 
 }
