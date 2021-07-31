@@ -7,11 +7,11 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @SpringBootTest
-class DesafioPropostaApplicationTests {
+class PropostaApplicationTests {
 
 	@Test
 	void contextLoads() {
-		DesafioPropostaApplication.main(new String[0]);
+		PropostaApplication.main(new String[0]);
 	}
 
 }

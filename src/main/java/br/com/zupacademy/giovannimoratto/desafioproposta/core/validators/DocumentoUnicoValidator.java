@@ -31,7 +31,7 @@ public class DocumentoUnicoValidator implements ConstraintValidator <DocumentoUn
             Query query = em.createQuery("FROM PropostaModel o WHERE o.documento = :VALUE");
             boolean result = query.setParameter("VALUE", value).getResultList().isEmpty();
             if (!result) {
-                throw new ResponseStatusException(UNPROCESSABLE_ENTITY, "Documento já vinculado a uma desafioproposta.");
+                throw new ResponseStatusException(UNPROCESSABLE_ENTITY, "Documento já vinculado a uma proposta.");
             }
         }
         return true;
