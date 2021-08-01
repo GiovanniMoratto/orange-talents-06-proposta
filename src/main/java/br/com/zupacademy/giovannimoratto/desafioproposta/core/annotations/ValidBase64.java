@@ -1,6 +1,6 @@
 package br.com.zupacademy.giovannimoratto.desafioproposta.core.annotations;
 
-import br.com.zupacademy.giovannimoratto.desafioproposta.core.validators.DocumentoUnicoValidator;
+import br.com.zupacademy.giovannimoratto.desafioproposta.core.validators.ValidBase64Validator;
 
 import javax.validation.Constraint;
 import javax.validation.Payload;
@@ -16,12 +16,12 @@ import static java.lang.annotation.RetentionPolicy.RUNTIME;
  */
 
 @Documented
-@Constraint(validatedBy = {DocumentoUnicoValidator.class})
+@Constraint(validatedBy = {ValidBase64Validator.class})
 @Target(FIELD)
 @Retention(RUNTIME)
-public @interface DocumentoUnico {
+public @interface ValidBase64 {
 
-    String message() default "Este documento já está vinculado a uma proposta!";
+    String message() default "Formato inválido! Campo deve possuir formato Base64.";
 
     Class <?>[] groups() default {};
 

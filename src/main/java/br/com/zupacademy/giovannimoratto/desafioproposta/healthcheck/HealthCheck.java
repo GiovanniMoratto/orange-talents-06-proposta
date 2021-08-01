@@ -21,7 +21,6 @@ public class HealthCheck implements HealthIndicator {
         details.put("versão", "1.0.0");
         details.put("descrição", "Heath projeto");
         details.put("endereço", "127.0.0.1");
-
         return Health.status(Status.UP).withDetails(details).build();
     }
 
