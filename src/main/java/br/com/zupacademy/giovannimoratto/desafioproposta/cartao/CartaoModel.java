@@ -1,10 +1,13 @@
 package br.com.zupacademy.giovannimoratto.desafioproposta.cartao;
 
+import br.com.zupacademy.giovannimoratto.desafioproposta.Bloqueio.BloqueioModel;
+import br.com.zupacademy.giovannimoratto.desafioproposta.biometria.BiometriaModel;
 import br.com.zupacademy.giovannimoratto.desafioproposta.proposta.PropostaModel;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.List;
 
 import static javax.persistence.GenerationType.IDENTITY;
 
@@ -27,6 +30,10 @@ public class CartaoModel {
     @JsonBackReference
     @OneToOne(mappedBy = "cartao")
     private PropostaModel proposta;
+    @OneToMany(mappedBy = "cartao")
+    private List <BiometriaModel> biometrias;
+    @OneToOne(mappedBy = "cartao")
+    private BloqueioModel bloqueio;
 
     /* Constructors */
     @Deprecated
@@ -47,5 +54,9 @@ public class CartaoModel {
 
     public Long getId() {
         return id;
+    }
+
+    public BloqueioModel getBloqueio() {
+        return bloqueio;
     }
 }
