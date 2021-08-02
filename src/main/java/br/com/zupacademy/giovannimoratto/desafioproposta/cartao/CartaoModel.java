@@ -45,4 +45,7 @@ public class CartaoModel {
         return proposta;
     }
 
+    public Long getId() {
+        return id;
+    }
 }

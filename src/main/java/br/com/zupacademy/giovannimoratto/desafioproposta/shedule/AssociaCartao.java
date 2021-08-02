@@ -2,9 +2,12 @@ package br.com.zupacademy.giovannimoratto.desafioproposta.shedule;
 
 import br.com.zupacademy.giovannimoratto.desafioproposta.cartao.CartaoResponse;
 import br.com.zupacademy.giovannimoratto.desafioproposta.feign.CartoesFeignClient;
+import br.com.zupacademy.giovannimoratto.desafioproposta.proposta.PropostaController;
 import br.com.zupacademy.giovannimoratto.desafioproposta.proposta.PropostaModel;
 import br.com.zupacademy.giovannimoratto.desafioproposta.proposta.PropostaRepository;
 import feign.FeignException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
@@ -23,6 +26,8 @@ import static org.springframework.http.HttpStatus.SERVICE_UNAVAILABLE;
 @Component
 public class AssociaCartao {
 
+    private final Logger logger = LoggerFactory.getLogger(PropostaController.class);
+
     @Autowired
     private PropostaRepository repository;
     @Autowired
@@ -37,6 +42,8 @@ public class AssociaCartao {
             try {
                 CartaoResponse novoCartao = api.associaCartao(proposta.toAnalise());
                 proposta.adicionaCartao(novoCartao.toModel(proposta));
+                logger.info("Proposta de ID: {} associada ao cartão de número: {}", proposta.getId(),
+                        novoCartao.getNumero());
                 repository.save(proposta);
             } catch (FeignException e) {
                 throw new ResponseStatusException(SERVICE_UNAVAILABLE, "Serviço indisponivel!");

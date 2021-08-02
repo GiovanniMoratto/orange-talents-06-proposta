@@ -33,4 +33,8 @@ public class CartaoResponse {
         return new CartaoModel(numero, emitidoEm, titular, limite, proposta);
     }
 
+    public String getNumero() {
+        return numero;
+    }
+
 }
