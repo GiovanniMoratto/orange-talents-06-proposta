@@ -30,13 +30,10 @@ public class AvisoController {
     public ResponseEntity <?> avisarViagem(@PathVariable Long id, @RequestBody @Valid AvisoRequest bodyRequest,
                                            HttpServletRequest httpRequest) {
 
-        String userAgent = httpRequest.getHeader(HttpHeaders.USER_AGENT);
-        String ip = httpRequest.getRemoteAddr();
-
         CartaoModel cartao = cartaoRepository.findById(id).orElseThrow(()
                 -> new ResponseStatusException(NOT_FOUND, "Este cartão não existe."));
 
-        AvisoModel novoAviso = bodyRequest.toModel(ip, userAgent, cartao);
+        AvisoModel novoAviso = bodyRequest.toModel(cartao, httpRequest);
         novoAviso = avisoRepository.save(novoAviso);
         return ResponseEntity.ok().build();
     }

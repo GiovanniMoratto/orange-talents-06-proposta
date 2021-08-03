@@ -1,7 +1,9 @@
 package br.com.zupacademy.giovannimoratto.desafioproposta.aviso;
 
 import br.com.zupacademy.giovannimoratto.desafioproposta.cartao.CartaoModel;
+import org.springframework.http.HttpHeaders;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.validation.constraints.Future;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
@@ -24,7 +26,9 @@ public class AvisoRequest {
         this.validoAte = validoAte;
     }
 
-    public AvisoModel toModel(String ipClient, String userAgent, CartaoModel cartao) {
+    public AvisoModel toModel(CartaoModel cartao, HttpServletRequest httpRequest) {
+        String userAgent = httpRequest.getHeader(HttpHeaders.USER_AGENT);
+        String ipClient = httpRequest.getRemoteAddr();
         return new AvisoModel(destino, validoAte, ipClient, userAgent, cartao);
     }
 }

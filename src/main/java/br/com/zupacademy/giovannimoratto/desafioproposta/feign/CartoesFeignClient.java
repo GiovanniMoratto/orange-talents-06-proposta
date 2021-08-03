@@ -1,7 +1,7 @@
 package br.com.zupacademy.giovannimoratto.desafioproposta.feign;
 
-import br.com.zupacademy.giovannimoratto.desafioproposta.Bloqueio.BloqueioRequest;
-import br.com.zupacademy.giovannimoratto.desafioproposta.Bloqueio.BloqueioResponse;
+import br.com.zupacademy.giovannimoratto.desafioproposta.Bloqueio.BloqueioClientRequest;
+import br.com.zupacademy.giovannimoratto.desafioproposta.Bloqueio.BloqueioClientResponse;
 import br.com.zupacademy.giovannimoratto.desafioproposta.cartao.AnaliseRequest;
 import br.com.zupacademy.giovannimoratto.desafioproposta.cartao.CartaoResponse;
 import org.springframework.cloud.openfeign.FeignClient;
@@ -20,6 +20,6 @@ public interface CartoesFeignClient {
     CartaoResponse associaCartao(@RequestBody AnaliseRequest request);
 
     @PostMapping("/api/cartoes/{id}/bloqueios")
-    BloqueioResponse notificacaoDeBloqueio(@PathVariable("id") String id, @RequestBody BloqueioRequest request);
+    BloqueioClientResponse notificacaoDeBloqueio(@PathVariable("id") String id, @RequestBody BloqueioClientRequest request);
 
 }

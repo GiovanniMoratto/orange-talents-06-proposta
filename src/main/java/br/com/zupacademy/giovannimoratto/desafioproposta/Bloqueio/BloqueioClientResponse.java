@@ -4,15 +4,15 @@ package br.com.zupacademy.giovannimoratto.desafioproposta.Bloqueio;
  * @Author giovanni.moratto
  */
 
-public class BloqueioResponse {
+public class BloqueioClientResponse {
 
     private BloqueioStatus resultado;
 
     @Deprecated
-    public BloqueioResponse() {
+    public BloqueioClientResponse() {
     }
 
-    public BloqueioResponse(BloqueioStatus resultado) {
+    public BloqueioClientResponse(BloqueioStatus resultado) {
         this.resultado = resultado;
     }
 

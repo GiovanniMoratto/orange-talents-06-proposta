@@ -50,12 +50,14 @@ public class BloqueioController {
 
         BloqueioModel solicitacaoBloqueio = new BloqueioModel(request.getRemoteAddr(), userAgent,
                 cartao.getNumero(), cartao);
-
         logger.info("Requisição de bloqueio convertida em classe de dominio");
+
         bloqueioRepository.save(solicitacaoBloqueio);
         logger.info("Requisição de bloqueio persistida no banco de dados");
+
         cartao.bloquear();
         logger.info("Cartão bloqueado");
+
         cartaoRepository.save(cartao);
         logger.info("Status do cartão atualizado no banco de dados");
         return ResponseEntity.ok().build();
@@ -86,8 +88,8 @@ public class BloqueioController {
     private void notificaBloqueio(CartaoModel cartao) {
         logger.info("Notificação de tentativa de bloqueio enviada ao cliente");
         try {
-            BloqueioResponse resultado = api.notificacaoDeBloqueio(
-                    cartao.getNumero(), new BloqueioRequest("api-proposta"));
+            BloqueioClientResponse resultado = api.notificacaoDeBloqueio(
+                    cartao.getNumero(), new BloqueioClientRequest("api-proposta"));
             logger.info("Resultado da notificação: {}", resultado.getResultado());
         } catch (FeignException e) {
             throw new ResponseStatusException(UNPROCESSABLE_ENTITY, "Falha no sistema");
