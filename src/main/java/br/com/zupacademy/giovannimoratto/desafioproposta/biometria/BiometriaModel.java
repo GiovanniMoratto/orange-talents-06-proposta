@@ -1,6 +1,7 @@
 package br.com.zupacademy.giovannimoratto.desafioproposta.biometria;
 
 import br.com.zupacademy.giovannimoratto.desafioproposta.cartao.CartaoModel;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import org.hibernate.annotations.CreationTimestamp;
 
 import javax.persistence.*;
@@ -25,6 +26,7 @@ public class BiometriaModel {
     private String fingerprint;
     @NotNull
     @ManyToOne
+    @JsonBackReference
     @JoinColumn(nullable = false)
     private CartaoModel cartao;
     @CreationTimestamp

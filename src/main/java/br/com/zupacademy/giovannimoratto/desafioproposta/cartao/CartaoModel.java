@@ -4,12 +4,15 @@ import br.com.zupacademy.giovannimoratto.desafioproposta.Bloqueio.BloqueioModel;
 import br.com.zupacademy.giovannimoratto.desafioproposta.biometria.BiometriaModel;
 import br.com.zupacademy.giovannimoratto.desafioproposta.proposta.PropostaModel;
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
 import java.util.HashSet;
 import java.util.Set;
 
+import static br.com.zupacademy.giovannimoratto.desafioproposta.cartao.CartaoStatus.ATIVO;
+import static br.com.zupacademy.giovannimoratto.desafioproposta.cartao.CartaoStatus.BLOQUEADO;
 import static javax.persistence.GenerationType.IDENTITY;
 
 /**
@@ -31,10 +34,14 @@ public class CartaoModel {
     @JsonBackReference
     @OneToOne(mappedBy = "cartao")
     private PropostaModel proposta;
-    @OneToMany(mappedBy = "cartao")
-    private Set <BiometriaModel> biometria = new HashSet <>();
+    @JsonManagedReference
+    @OneToMany(mappedBy = "cartao", cascade = CascadeType.MERGE, fetch = FetchType.EAGER)
+    private Set <BiometriaModel> biometrias = new HashSet <>();
+    @JsonManagedReference
     @OneToOne(mappedBy = "cartao")
     private BloqueioModel bloqueio;
+    @Enumerated(EnumType.STRING)
+    private CartaoStatus status = ATIVO;
 
     /* Constructors */
     @Deprecated
@@ -49,6 +56,12 @@ public class CartaoModel {
         this.proposta = proposta;
     }
 
+    /* Methods */
+    public void bloquear() {
+        this.status = BLOQUEADO;
+    }
+
+    /* Getters */
     public PropostaModel getProposta() {
         return proposta;
     }
@@ -59,5 +72,9 @@ public class CartaoModel {
 
     public String getNumero() {
         return numero;
+    }
+
+    public CartaoStatus getStatus() {
+        return status;
     }
 }

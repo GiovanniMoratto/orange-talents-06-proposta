@@ -1,6 +1,7 @@
 package br.com.zupacademy.giovannimoratto.desafioproposta.Bloqueio;
 
 import br.com.zupacademy.giovannimoratto.desafioproposta.cartao.CartaoModel;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import org.hibernate.annotations.CreationTimestamp;
 
 import javax.persistence.*;
@@ -28,8 +29,10 @@ public class BloqueioModel {
     @CreationTimestamp
     private LocalDateTime bloqueadoEm;
     @NotNull
+    @JsonBackReference
     @OneToOne(cascade = CascadeType.MERGE, fetch = FetchType.EAGER)
     private CartaoModel cartao;
+    private boolean ativo = false;
 
     @Deprecated
     public BloqueioModel() {
@@ -40,6 +43,7 @@ public class BloqueioModel {
         this.userAgent = userAgent;
         this.numero = numero;
         this.cartao = cartao;
+        this.ativo = true;
     }
 
     public Long getId() {
@@ -66,4 +70,7 @@ public class BloqueioModel {
         return cartao;
     }
 
+    public boolean isAtivo() {
+        return ativo;
+    }
 }

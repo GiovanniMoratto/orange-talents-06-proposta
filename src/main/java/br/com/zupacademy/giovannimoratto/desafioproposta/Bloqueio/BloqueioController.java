@@ -2,6 +2,8 @@ package br.com.zupacademy.giovannimoratto.desafioproposta.Bloqueio;
 
 import br.com.zupacademy.giovannimoratto.desafioproposta.cartao.CartaoModel;
 import br.com.zupacademy.giovannimoratto.desafioproposta.cartao.CartaoRepository;
+import br.com.zupacademy.giovannimoratto.desafioproposta.cartao.CartaoStatus;
+import br.com.zupacademy.giovannimoratto.desafioproposta.feign.CartoesFeignClient;
 import br.com.zupacademy.giovannimoratto.desafioproposta.proposta.PropostaController;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -14,6 +16,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.transaction.Transactional;
 import java.util.Optional;
 
+import static br.com.zupacademy.giovannimoratto.desafioproposta.Bloqueio.BloqueioStatus.FALHA;
 import static org.springframework.http.HttpStatus.NOT_FOUND;
 import static org.springframework.http.HttpStatus.UNPROCESSABLE_ENTITY;
 
@@ -31,22 +34,30 @@ public class BloqueioController {
     private CartaoRepository cartaoRepository;
     @Autowired
     private BloqueioRepository bloqueioRepository;
+    @Autowired
+    private CartoesFeignClient api;
 
     @PostMapping("/cartoes/bloqueio/{id}")
     @Transactional
     public ResponseEntity <?> solicitacaoDeBloqueio(@PathVariable Long id,
-                                             @RequestHeader(value = "User-Agent") String userAgent,
-                                             HttpServletRequest request) {
+                                                    @RequestHeader(value = "User-Agent") String userAgent,
+                                                    HttpServletRequest request) {
 
         CartaoModel cartao = verificaSeCartaoExiste(id);
         logger.info("Cartão encontrado");
         verificaSeCartaoJaEstaBloqueado(cartao);
-        logger.info("Nenhum bloqueio ativo no cartão");
-        BloqueioModel cartaoBloqueado = new BloqueioModel(request.getRemoteAddr(), userAgent,
+        notificaBloqueio(cartao);
+
+        BloqueioModel solicitacaoBloqueio = new BloqueioModel(request.getRemoteAddr(), userAgent,
                 cartao.getNumero(), cartao);
+
         logger.info("Requisição de bloqueio convertida em classe de dominio");
-        bloqueioRepository.save(cartaoBloqueado);
+        bloqueioRepository.save(solicitacaoBloqueio);
         logger.info("Requisição de bloqueio persistida no banco de dados");
+        cartao.bloquear();
+        logger.info("Cartão bloqueado");
+        cartaoRepository.save(cartao);
+        logger.info("Status do cartão atualizado no banco de dados");
         return ResponseEntity.ok().build();
     }
 
@@ -58,9 +69,25 @@ public class BloqueioController {
 
     private void verificaSeCartaoJaEstaBloqueado(CartaoModel cartao) {
         logger.info("Verificando se o cartão já está bloqueado...");
-        Optional <BloqueioModel> optionalBloqueio = bloqueioRepository.findByNumero(cartao.getNumero());
-        if (optionalBloqueio.isPresent()) {
-            throw new ResponseStatusException(UNPROCESSABLE_ENTITY, "Cartão já está bloqueado");
+        Optional <CartaoModel> optionalCartao = cartaoRepository.findById(cartao.getId());
+        if (optionalCartao.get().getStatus().equals(CartaoStatus.BLOQUEADO)) {
+            throw new ResponseStatusException(UNPROCESSABLE_ENTITY, "Este cartão já foi bloqueado");
+        }
+        logger.info("Verificando se o cartão possui solicitação de bloqueio...");
+        BloqueioModel solicitacaoBloqueio = bloqueioRepository.findByNumero(cartao.getNumero()).orElseThrow();
+        if (solicitacaoBloqueio.isAtivo()) {
+            throw new ResponseStatusException(UNPROCESSABLE_ENTITY, "Já foi solicitado o bloqueio deste cartão");
+        }
+        logger.info("Nenhum bloqueio ativo no cartão");
+    }
+
+    private void notificaBloqueio(CartaoModel cartao) {
+        logger.info("Notificação de tentativa de bloqueio enviada ao cliente");
+        BloqueioResponse resultado = api.notificacaoDeBloqueio(
+                cartao.getNumero(), new BloqueioRequest("api-proposta"));
+        logger.info("Resultado da notificação: {}", resultado.getResultado());
+        if (resultado.getResultado().equals(FALHA)) {
+            throw new ResponseStatusException(UNPROCESSABLE_ENTITY, "Falha no sistema");
         }
     }
 
