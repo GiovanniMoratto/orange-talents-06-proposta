@@ -1,11 +1,11 @@
 package br.com.zupacademy.giovannimoratto.desafioproposta.feign;
 
 import br.com.zupacademy.giovannimoratto.desafioproposta.aviso.AvisoRequest;
-import br.com.zupacademy.giovannimoratto.desafioproposta.feign.requests.AnaliseClientRequest;
-import br.com.zupacademy.giovannimoratto.desafioproposta.feign.requests.BloqueioClientRequest;
-import br.com.zupacademy.giovannimoratto.desafioproposta.feign.responses.AvisoClientResponse;
-import br.com.zupacademy.giovannimoratto.desafioproposta.feign.responses.BloqueioClientResponse;
-import br.com.zupacademy.giovannimoratto.desafioproposta.feign.responses.CartaoClientResponse;
+import br.com.zupacademy.giovannimoratto.desafioproposta.proposta.AnaliseClientRequest;
+import br.com.zupacademy.giovannimoratto.desafioproposta.Bloqueio.BloqueioClientRequest;
+import br.com.zupacademy.giovannimoratto.desafioproposta.aviso.AvisoClientResponse;
+import br.com.zupacademy.giovannimoratto.desafioproposta.Bloqueio.BloqueioClientResponse;
+import br.com.zupacademy.giovannimoratto.desafioproposta.cartao.CartaoClientResponse;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;

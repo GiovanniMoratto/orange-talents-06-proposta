@@ -1,4 +1,4 @@
-package br.com.zupacademy.giovannimoratto.desafioproposta.feign.requests;
+package br.com.zupacademy.giovannimoratto.desafioproposta.proposta;
 
 import javax.validation.constraints.NotBlank;
 

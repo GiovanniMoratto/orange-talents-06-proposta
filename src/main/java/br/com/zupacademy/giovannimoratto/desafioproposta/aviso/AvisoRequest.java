@@ -31,4 +31,13 @@ public class AvisoRequest {
         String ipClient = httpRequest.getRemoteAddr();
         return new AvisoModel(destino, validoAte, ipClient, userAgent, cartao);
     }
+
+    public String getDestino() {
+        return destino;
+    }
+
+    public LocalDate getValidoAte() {
+        return validoAte;
+    }
+
 }

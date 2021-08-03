@@ -44,7 +44,7 @@ public class BiometriaController {
         BiometriaModel novaBiometria = request.toModel(cartao);
         logger.info("Requisição de biometria convertida em classe de dominio");
         repository.save(novaBiometria);
-        logger.info("Requisição de biometria persistida no banco de dados");
+        logger.info("Biometria persistida no banco de dados");
         URI uri = uriBuilder.path("/biometria/{id}").buildAndExpand(novaBiometria.getId()).toUri();
         return ResponseEntity.created(uri).build();
     }

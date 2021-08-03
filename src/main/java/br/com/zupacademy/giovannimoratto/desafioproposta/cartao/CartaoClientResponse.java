@@ -1,4 +1,4 @@
-package br.com.zupacademy.giovannimoratto.desafioproposta.feign.responses;
+package br.com.zupacademy.giovannimoratto.desafioproposta.cartao;
 
 import br.com.zupacademy.giovannimoratto.desafioproposta.cartao.CartaoModel;
 import br.com.zupacademy.giovannimoratto.desafioproposta.proposta.PropostaModel;

@@ -41,7 +41,7 @@ public class PropostaController {
         PropostaModel novaProposta = request.toModel();
         logger.info("Requisição de proposta convertida em classe de dominio");
         repository.save(novaProposta);
-        logger.info("Requisição de proposta persistida no banco de dados");
+        logger.info("Proposta persistida no banco de dados");
         logger.info("Verificando status da requisição de proposta");
         verificaRestricao(novaProposta);
         URI uri = uriBuilder.path("/proposta/{id}").buildAndExpand(novaProposta.getId()).toUri();

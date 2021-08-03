@@ -1,6 +1,6 @@
 package br.com.zupacademy.giovannimoratto.desafioproposta.feign;
 
-import br.com.zupacademy.giovannimoratto.desafioproposta.feign.requests.AnaliseClientRequest;
+import br.com.zupacademy.giovannimoratto.desafioproposta.proposta.AnaliseClientRequest;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;

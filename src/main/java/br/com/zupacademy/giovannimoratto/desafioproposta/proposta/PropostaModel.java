@@ -1,6 +1,5 @@
 package br.com.zupacademy.giovannimoratto.desafioproposta.proposta;
 
-import br.com.zupacademy.giovannimoratto.desafioproposta.feign.requests.AnaliseClientRequest;
 import br.com.zupacademy.giovannimoratto.desafioproposta.cartao.CartaoModel;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 

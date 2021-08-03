@@ -1,4 +1,4 @@
-package br.com.zupacademy.giovannimoratto.desafioproposta.feign.responses;
+package br.com.zupacademy.giovannimoratto.desafioproposta.aviso;
 
 /**
  * @Author giovanni.moratto
@@ -6,17 +6,18 @@ package br.com.zupacademy.giovannimoratto.desafioproposta.feign.responses;
 
 public class AvisoClientResponse {
 
-    private String resultado;
+    private AvisoStatus resultado;
 
     @Deprecated
     public AvisoClientResponse() {
     }
 
-    public AvisoClientResponse(String resultado) {
+    public AvisoClientResponse(AvisoStatus resultado) {
         this.resultado = resultado;
     }
 
-    public String getResultado() {
+    public AvisoStatus getResultado() {
         return resultado;
     }
+
 }

@@ -1,6 +1,6 @@
 package br.com.zupacademy.giovannimoratto.desafioproposta.shedule;
 
-import br.com.zupacademy.giovannimoratto.desafioproposta.feign.responses.CartaoClientResponse;
+import br.com.zupacademy.giovannimoratto.desafioproposta.cartao.CartaoClientResponse;
 import br.com.zupacademy.giovannimoratto.desafioproposta.feign.CartoesFeignClient;
 import br.com.zupacademy.giovannimoratto.desafioproposta.proposta.PropostaModel;
 import br.com.zupacademy.giovannimoratto.desafioproposta.proposta.PropostaRepository;

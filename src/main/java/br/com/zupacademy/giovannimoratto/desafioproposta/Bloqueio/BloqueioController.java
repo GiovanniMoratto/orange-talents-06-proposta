@@ -4,8 +4,6 @@ import br.com.zupacademy.giovannimoratto.desafioproposta.cartao.CartaoModel;
 import br.com.zupacademy.giovannimoratto.desafioproposta.cartao.CartaoRepository;
 import br.com.zupacademy.giovannimoratto.desafioproposta.cartao.CartaoStatus;
 import br.com.zupacademy.giovannimoratto.desafioproposta.feign.CartoesFeignClient;
-import br.com.zupacademy.giovannimoratto.desafioproposta.feign.requests.BloqueioClientRequest;
-import br.com.zupacademy.giovannimoratto.desafioproposta.feign.responses.BloqueioClientResponse;
 import br.com.zupacademy.giovannimoratto.desafioproposta.proposta.PropostaController;
 import feign.FeignException;
 import org.slf4j.Logger;
@@ -55,7 +53,7 @@ public class BloqueioController {
         logger.info("Requisição de bloqueio convertida em classe de dominio");
 
         bloqueioRepository.save(solicitacaoBloqueio);
-        logger.info("Requisição de bloqueio persistida no banco de dados");
+        logger.info("Bloqueio persistido no banco de dados");
 
         cartao.bloquear();
         logger.info("Cartão bloqueado");

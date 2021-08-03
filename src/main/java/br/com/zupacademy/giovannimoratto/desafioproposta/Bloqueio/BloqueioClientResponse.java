@@ -1,4 +1,4 @@
-package br.com.zupacademy.giovannimoratto.desafioproposta.feign.responses;
+package br.com.zupacademy.giovannimoratto.desafioproposta.Bloqueio;
 
 import br.com.zupacademy.giovannimoratto.desafioproposta.Bloqueio.BloqueioStatus;
 
