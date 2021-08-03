@@ -27,7 +27,6 @@ public class BloqueioModel {
     private String userAgent;
     @CreationTimestamp
     private LocalDateTime bloqueadoEm;
-    private boolean ativo;
     @NotNull
     @OneToOne(cascade = CascadeType.MERGE, fetch = FetchType.EAGER)
     private CartaoModel cartao;
@@ -41,7 +40,6 @@ public class BloqueioModel {
         this.userAgent = userAgent;
         this.numero = numero;
         this.cartao = cartao;
-        this.ativo = true;
     }
 
     public Long getId() {
@@ -66,10 +64,6 @@ public class BloqueioModel {
 
     public CartaoModel getCartao() {
         return cartao;
-    }
-
-    public boolean isAtivo() {
-        return ativo;
     }
 
 }

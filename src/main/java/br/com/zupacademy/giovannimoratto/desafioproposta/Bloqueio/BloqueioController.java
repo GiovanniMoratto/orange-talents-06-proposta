@@ -2,7 +2,6 @@ package br.com.zupacademy.giovannimoratto.desafioproposta.Bloqueio;
 
 import br.com.zupacademy.giovannimoratto.desafioproposta.cartao.CartaoModel;
 import br.com.zupacademy.giovannimoratto.desafioproposta.cartao.CartaoRepository;
-import br.com.zupacademy.giovannimoratto.desafioproposta.feign.CartoesFeignClient;
 import br.com.zupacademy.giovannimoratto.desafioproposta.proposta.PropostaController;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -15,7 +14,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.transaction.Transactional;
 import java.util.Optional;
 
-import static br.com.zupacademy.giovannimoratto.desafioproposta.Bloqueio.BloqueioStatus.FALHA;
 import static org.springframework.http.HttpStatus.NOT_FOUND;
 import static org.springframework.http.HttpStatus.UNPROCESSABLE_ENTITY;
 
@@ -33,8 +31,6 @@ public class BloqueioController {
     private CartaoRepository cartaoRepository;
     @Autowired
     private BloqueioRepository bloqueioRepository;
-    @Autowired
-    private CartoesFeignClient api;
 
     @PostMapping("/cartoes/bloqueio/{id}")
     @Transactional
@@ -43,34 +39,30 @@ public class BloqueioController {
                                              HttpServletRequest request) {
 
         CartaoModel cartao = verificaSeCartaoExiste(id);
+        logger.info("Cartão encontrado");
         verificaSeCartaoJaEstaBloqueado(cartao);
-        solicitaBloqueio(cartao);
-
+        logger.info("Nenhum bloqueio ativo no cartão");
         BloqueioModel cartaoBloqueado = new BloqueioModel(request.getRemoteAddr(), userAgent,
                 cartao.getNumero(), cartao);
-
+        logger.info("Requisição de bloqueio convertida em classe de dominio");
         bloqueioRepository.save(cartaoBloqueado);
+        logger.info("Requisição de bloqueio persistida no banco de dados");
         return ResponseEntity.ok().build();
     }
 
     private CartaoModel verificaSeCartaoExiste(Long id) {
+        logger.info("Buscando cartão por ID...");
         return cartaoRepository.findById(id).orElseThrow(() ->
                 new ResponseStatusException(NOT_FOUND, "Este cartão não existe"));
     }
 
     private void verificaSeCartaoJaEstaBloqueado(CartaoModel cartao) {
+        logger.info("Verificando se o cartão já está bloqueado...");
         Optional <BloqueioModel> optionalBloqueio = bloqueioRepository.findByNumero(cartao.getNumero());
         if (optionalBloqueio.isPresent()) {
-            throw new ResponseStatusException(UNPROCESSABLE_ENTITY, "Cartão já bloqueado");
+            throw new ResponseStatusException(UNPROCESSABLE_ENTITY, "Cartão já está bloqueado");
         }
     }
 
-    private void solicitaBloqueio(CartaoModel cartao) {
-        BloqueioResponse resultado = api.solicitacaoBloqueio(
-                cartao.getNumero(), new BloqueioRequest("api-proposta"));
-        if (resultado.getResultado().equals(FALHA)) {
-            throw new ResponseStatusException(UNPROCESSABLE_ENTITY, "Falha no sistema");
-        }
-    }
 }
 
