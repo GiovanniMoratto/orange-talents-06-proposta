@@ -66,7 +66,7 @@ public class PropostaController {
         logger.info("Buscando proposta por ID..");
         PropostaModel proposta = repository.findById(id).orElseThrow(() ->
                 new ResponseStatusException(NOT_FOUND, "Proposta não encontrada."));
-        logger.info("Proposta encontrada. ID: {}", proposta.getId());
+        logger.info("Proposta de ID: {} encontrada.", proposta.getId());
         return ResponseEntity.ok(new PropostaResponse(proposta));
     }
 

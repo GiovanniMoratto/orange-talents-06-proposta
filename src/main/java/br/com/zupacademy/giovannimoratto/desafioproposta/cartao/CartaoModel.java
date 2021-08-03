@@ -7,7 +7,8 @@ import com.fasterxml.jackson.annotation.JsonBackReference;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
 import static javax.persistence.GenerationType.IDENTITY;
 
@@ -31,7 +32,7 @@ public class CartaoModel {
     @OneToOne(mappedBy = "cartao")
     private PropostaModel proposta;
     @OneToMany(mappedBy = "cartao")
-    private List <BiometriaModel> biometrias;
+    private Set <BiometriaModel> biometria = new HashSet <>();
     @OneToOne(mappedBy = "cartao")
     private BloqueioModel bloqueio;
 
@@ -56,7 +57,7 @@ public class CartaoModel {
         return id;
     }
 
-    public BloqueioModel getBloqueio() {
-        return bloqueio;
+    public String getNumero() {
+        return numero;
     }
 }

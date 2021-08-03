@@ -4,55 +4,52 @@ import br.com.zupacademy.giovannimoratto.desafioproposta.cartao.CartaoModel;
 import org.hibernate.annotations.CreationTimestamp;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
-
 import java.time.LocalDateTime;
-import java.util.Optional;
-
-import static javax.persistence.GenerationType.IDENTITY;
 
 /**
  * @Author giovanni.moratto
  */
 
 @Entity
-@Table(name = "tb_cartoes_bloqueados")
+@Table(name = "tb_bloqueios")
 public class BloqueioModel {
 
-    /* Attributes */
     @Id
-    @GeneratedValue(strategy = IDENTITY)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @OneToOne(cascade = CascadeType.MERGE)
-    @NotNull
-    private CartaoModel cartao;
-    @CreationTimestamp
-    private LocalDateTime dataBloqueio;
-    @NotNull
+    @NotBlank
+    private String numero;
+    @NotBlank
     private String ipCliente;
-    @NotNull
+    @NotBlank
     private String userAgent;
+    @CreationTimestamp
+    private LocalDateTime bloqueadoEm;
+    private boolean ativo;
+    @NotNull
+    @OneToOne(cascade = CascadeType.MERGE, fetch = FetchType.EAGER)
+    private CartaoModel cartao;
 
     @Deprecated
     public BloqueioModel() {
     }
 
-    public BloqueioModel(Optional<CartaoModel> cartao, String ipCliente, String userAgent) {
-        this.cartao = cartao.get();
+    public BloqueioModel(String ipCliente, String userAgent, String numero, CartaoModel cartao) {
         this.ipCliente = ipCliente;
         this.userAgent = userAgent;
+        this.numero = numero;
+        this.cartao = cartao;
+        this.ativo = true;
     }
 
     public Long getId() {
         return id;
     }
 
-    public CartaoModel getCartao() {
-        return cartao;
-    }
-
-    public LocalDateTime getDataBloqueio() {
-        return dataBloqueio;
+    public String getNumero() {
+        return numero;
     }
 
     public String getIpCliente() {
@@ -62,4 +59,17 @@ public class BloqueioModel {
     public String getUserAgent() {
         return userAgent;
     }
+
+    public LocalDateTime getBloqueadoEm() {
+        return bloqueadoEm;
+    }
+
+    public CartaoModel getCartao() {
+        return cartao;
+    }
+
+    public boolean isAtivo() {
+        return ativo;
+    }
+
 }

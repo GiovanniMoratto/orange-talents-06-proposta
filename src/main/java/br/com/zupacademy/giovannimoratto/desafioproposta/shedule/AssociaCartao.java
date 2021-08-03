@@ -2,7 +2,6 @@ package br.com.zupacademy.giovannimoratto.desafioproposta.shedule;
 
 import br.com.zupacademy.giovannimoratto.desafioproposta.cartao.CartaoResponse;
 import br.com.zupacademy.giovannimoratto.desafioproposta.feign.CartoesFeignClient;
-import br.com.zupacademy.giovannimoratto.desafioproposta.proposta.PropostaController;
 import br.com.zupacademy.giovannimoratto.desafioproposta.proposta.PropostaModel;
 import br.com.zupacademy.giovannimoratto.desafioproposta.proposta.PropostaRepository;
 import feign.FeignException;
@@ -13,7 +12,6 @@ import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 import org.springframework.web.server.ResponseStatusException;
 
-import javax.transaction.Transactional;
 import java.util.List;
 
 import static br.com.zupacademy.giovannimoratto.desafioproposta.proposta.PropostaStatus.ELEGIVEL;
@@ -26,7 +24,7 @@ import static org.springframework.http.HttpStatus.SERVICE_UNAVAILABLE;
 @Component
 public class AssociaCartao {
 
-    private final Logger logger = LoggerFactory.getLogger(PropostaController.class);
+    private final Logger logger = LoggerFactory.getLogger(AssociaCartao.class);
 
     @Autowired
     private PropostaRepository repository;
@@ -34,10 +32,10 @@ public class AssociaCartao {
     private CartoesFeignClient api;
 
     // Gera cartão e o associa à propostas elegivéis
-    @Transactional
     @Scheduled(fixedDelayString = "${scheduled-cartao.time}")
     private void associaCartao() {
         List <PropostaModel> propostas = repository.findByStatusAndCartao(ELEGIVEL, null);
+        logger.info("{} propostas elegiveis encontradas.", propostas.size());
         propostas.forEach(proposta -> {
             try {
                 CartaoResponse novoCartao = api.associaCartao(proposta.toAnalise());
