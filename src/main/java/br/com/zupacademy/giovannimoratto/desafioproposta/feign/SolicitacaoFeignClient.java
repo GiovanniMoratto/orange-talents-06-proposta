@@ -1,6 +1,6 @@
 package br.com.zupacademy.giovannimoratto.desafioproposta.feign;
 
-import br.com.zupacademy.giovannimoratto.desafioproposta.cartao.AnaliseRequest;
+import br.com.zupacademy.giovannimoratto.desafioproposta.feign.requests.AnaliseClientRequest;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -13,5 +13,5 @@ import org.springframework.web.bind.annotation.RequestBody;
 public interface SolicitacaoFeignClient {
 
     @PostMapping
-    void verificaRestricao(@RequestBody AnaliseRequest request);
+    void verificaRestricao(@RequestBody AnaliseClientRequest request);
 }

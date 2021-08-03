@@ -1,6 +1,6 @@
 package br.com.zupacademy.giovannimoratto.desafioproposta.shedule;
 
-import br.com.zupacademy.giovannimoratto.desafioproposta.cartao.CartaoResponse;
+import br.com.zupacademy.giovannimoratto.desafioproposta.feign.responses.CartaoClientResponse;
 import br.com.zupacademy.giovannimoratto.desafioproposta.feign.CartoesFeignClient;
 import br.com.zupacademy.giovannimoratto.desafioproposta.proposta.PropostaModel;
 import br.com.zupacademy.giovannimoratto.desafioproposta.proposta.PropostaRepository;
@@ -29,7 +29,7 @@ public class AssociaCartao {
     @Autowired
     private PropostaRepository repository;
     @Autowired
-    private CartoesFeignClient api;
+    private CartoesFeignClient feignClient;
 
     // Gera cartão e o associa à propostas elegivéis
     @Scheduled(fixedDelayString = "${scheduled-cartao.time}")
@@ -38,7 +38,7 @@ public class AssociaCartao {
         logger.info("{} propostas elegiveis encontradas.", propostas.size());
         propostas.forEach(proposta -> {
             try {
-                CartaoResponse novoCartao = api.associaCartao(proposta.toAnalise());
+                CartaoClientResponse novoCartao = feignClient.associaCartao(proposta.toAnalise());
                 proposta.adicionaCartao(novoCartao.toModel(proposta));
                 logger.info("Proposta de ID: {} associada ao cartão de número: {}", proposta.getId(),
                         novoCartao.getNumero());

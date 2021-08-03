@@ -1,4 +1,6 @@
-package br.com.zupacademy.giovannimoratto.desafioproposta.Bloqueio;
+package br.com.zupacademy.giovannimoratto.desafioproposta.feign.responses;
+
+import br.com.zupacademy.giovannimoratto.desafioproposta.Bloqueio.BloqueioStatus;
 
 /**
  * @Author giovanni.moratto

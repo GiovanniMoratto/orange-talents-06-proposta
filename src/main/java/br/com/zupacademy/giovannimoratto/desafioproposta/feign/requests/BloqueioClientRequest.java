@@ -1,4 +1,6 @@
-package br.com.zupacademy.giovannimoratto.desafioproposta.Bloqueio;
+package br.com.zupacademy.giovannimoratto.desafioproposta.feign.requests;
+
+import javax.validation.constraints.NotBlank;
 
 /**
  * @Author giovanni.moratto
@@ -6,6 +8,7 @@ package br.com.zupacademy.giovannimoratto.desafioproposta.Bloqueio;
 
 public class BloqueioClientRequest {
 
+    @NotBlank
     private final String sistemaResponsavel;
 
     public BloqueioClientRequest(String sistemaResponsavel) {

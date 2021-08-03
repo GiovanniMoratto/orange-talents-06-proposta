@@ -4,6 +4,8 @@ import br.com.zupacademy.giovannimoratto.desafioproposta.cartao.CartaoModel;
 import br.com.zupacademy.giovannimoratto.desafioproposta.cartao.CartaoRepository;
 import br.com.zupacademy.giovannimoratto.desafioproposta.cartao.CartaoStatus;
 import br.com.zupacademy.giovannimoratto.desafioproposta.feign.CartoesFeignClient;
+import br.com.zupacademy.giovannimoratto.desafioproposta.feign.requests.BloqueioClientRequest;
+import br.com.zupacademy.giovannimoratto.desafioproposta.feign.responses.BloqueioClientResponse;
 import br.com.zupacademy.giovannimoratto.desafioproposta.proposta.PropostaController;
 import feign.FeignException;
 import org.slf4j.Logger;
@@ -35,7 +37,7 @@ public class BloqueioController {
     @Autowired
     private BloqueioRepository bloqueioRepository;
     @Autowired
-    private CartoesFeignClient api;
+    private CartoesFeignClient feignClient;
 
     @PostMapping("/cartoes/bloqueio/{id}")
     @Transactional
@@ -88,7 +90,7 @@ public class BloqueioController {
     private void notificaBloqueio(CartaoModel cartao) {
         logger.info("Notificação de tentativa de bloqueio enviada ao cliente");
         try {
-            BloqueioClientResponse resultado = api.notificacaoDeBloqueio(
+            BloqueioClientResponse resultado = feignClient.notificacaoDeBloqueio(
                     cartao.getNumero(), new BloqueioClientRequest("api-proposta"));
             logger.info("Resultado da notificação: {}", resultado.getResultado());
         } catch (FeignException e) {

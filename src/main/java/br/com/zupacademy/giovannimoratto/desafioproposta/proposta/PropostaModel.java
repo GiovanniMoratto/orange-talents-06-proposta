@@ -1,6 +1,6 @@
 package br.com.zupacademy.giovannimoratto.desafioproposta.proposta;
 
-import br.com.zupacademy.giovannimoratto.desafioproposta.cartao.AnaliseRequest;
+import br.com.zupacademy.giovannimoratto.desafioproposta.feign.requests.AnaliseClientRequest;
 import br.com.zupacademy.giovannimoratto.desafioproposta.cartao.CartaoModel;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
@@ -54,8 +54,8 @@ public class PropostaModel {
 
     /* Methods */
     // Instância uma classe AnaliseRequest usando os dados da PropostaModel
-    public AnaliseRequest toAnalise() {
-        return new AnaliseRequest(documento, nome, id.toString());
+    public AnaliseClientRequest toAnalise() {
+        return new AnaliseClientRequest(documento, nome, id.toString());
     }
 
     // Adiciona a restrição encontrada na consulta

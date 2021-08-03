@@ -31,7 +31,7 @@ public class PropostaController {
     @Autowired
     private PropostaRepository repository;
     @Autowired
-    private SolicitacaoFeignClient consulta;
+    private SolicitacaoFeignClient feignClient;
 
     @PostMapping("/nova-proposta")
     @Transactional
@@ -50,7 +50,7 @@ public class PropostaController {
 
     private void verificaRestricao(PropostaModel novaProposta) {
         try {
-            consulta.verificaRestricao(novaProposta.toAnalise());
+            feignClient.verificaRestricao(novaProposta.toAnalise());
             novaProposta.adicionaRestricao(ELEGIVEL);
             logger.info("Proposta elegivel");
             repository.save(novaProposta);

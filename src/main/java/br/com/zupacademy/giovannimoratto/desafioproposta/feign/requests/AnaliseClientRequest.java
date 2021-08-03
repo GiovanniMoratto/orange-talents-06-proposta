@@ -1,18 +1,23 @@
-package br.com.zupacademy.giovannimoratto.desafioproposta.cartao;
+package br.com.zupacademy.giovannimoratto.desafioproposta.feign.requests;
+
+import javax.validation.constraints.NotBlank;
 
 /**
  * @Author giovanni.moratto
  */
 
-public class AnaliseRequest {
+public class AnaliseClientRequest {
 
     /* Attributes */
+    @NotBlank
     private final String documento;
+    @NotBlank
     private final String nome;
+    @NotBlank
     private final String idProposta;
 
     /* Constructors */
-    public AnaliseRequest(String documento, String nome, String idProposta) {
+    public AnaliseClientRequest(String documento, String nome, String idProposta) {
         this.documento = documento;
         this.nome = nome;
         this.idProposta = idProposta;

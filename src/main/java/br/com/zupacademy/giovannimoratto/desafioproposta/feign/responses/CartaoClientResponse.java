@@ -1,5 +1,6 @@
-package br.com.zupacademy.giovannimoratto.desafioproposta.cartao;
+package br.com.zupacademy.giovannimoratto.desafioproposta.feign.responses;
 
+import br.com.zupacademy.giovannimoratto.desafioproposta.cartao.CartaoModel;
 import br.com.zupacademy.giovannimoratto.desafioproposta.proposta.PropostaModel;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
@@ -9,7 +10,7 @@ import java.time.LocalDateTime;
  * @Author giovanni.moratto
  */
 
-public class CartaoResponse {
+public class CartaoClientResponse {
 
     /* Attributes */
     @JsonProperty("id")
@@ -20,7 +21,7 @@ public class CartaoResponse {
     private final String idProposta;
 
     /* Constructors */
-    public CartaoResponse(String numero, LocalDateTime emitidoEm, String titular, Integer limite, String idProposta) {
+    public CartaoClientResponse(String numero, LocalDateTime emitidoEm, String titular, Integer limite, String idProposta) {
         this.numero = numero;
         this.emitidoEm = emitidoEm;
         this.titular = titular;
