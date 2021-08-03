@@ -5,6 +5,7 @@ import br.com.zupacademy.giovannimoratto.desafioproposta.cartao.CartaoRepository
 import br.com.zupacademy.giovannimoratto.desafioproposta.cartao.CartaoStatus;
 import br.com.zupacademy.giovannimoratto.desafioproposta.feign.CartoesFeignClient;
 import br.com.zupacademy.giovannimoratto.desafioproposta.proposta.PropostaController;
+import feign.FeignException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,7 +17,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.transaction.Transactional;
 import java.util.Optional;
 
-import static br.com.zupacademy.giovannimoratto.desafioproposta.Bloqueio.BloqueioStatus.FALHA;
 import static org.springframework.http.HttpStatus.NOT_FOUND;
 import static org.springframework.http.HttpStatus.UNPROCESSABLE_ENTITY;
 
@@ -70,12 +70,14 @@ public class BloqueioController {
     private void verificaSeCartaoJaEstaBloqueado(CartaoModel cartao) {
         logger.info("Verificando se o cartão já está bloqueado...");
         Optional <CartaoModel> optionalCartao = cartaoRepository.findById(cartao.getId());
-        if (optionalCartao.get().getStatus().equals(CartaoStatus.BLOQUEADO)) {
+
+        if (optionalCartao.isPresent() && optionalCartao.get().getStatus().equals(CartaoStatus.BLOQUEADO)) {
             throw new ResponseStatusException(UNPROCESSABLE_ENTITY, "Este cartão já foi bloqueado");
         }
         logger.info("Verificando se o cartão possui solicitação de bloqueio...");
-        BloqueioModel solicitacaoBloqueio = bloqueioRepository.findByNumero(cartao.getNumero()).orElseThrow();
-        if (solicitacaoBloqueio.isAtivo()) {
+        Optional <BloqueioModel> solicitacaoBloqueio = bloqueioRepository.findByCartao(cartao);
+
+        if (solicitacaoBloqueio.isPresent() && solicitacaoBloqueio.get().isAtivo()) {
             throw new ResponseStatusException(UNPROCESSABLE_ENTITY, "Já foi solicitado o bloqueio deste cartão");
         }
         logger.info("Nenhum bloqueio ativo no cartão");
@@ -83,10 +85,11 @@ public class BloqueioController {
 
     private void notificaBloqueio(CartaoModel cartao) {
         logger.info("Notificação de tentativa de bloqueio enviada ao cliente");
-        BloqueioResponse resultado = api.notificacaoDeBloqueio(
-                cartao.getNumero(), new BloqueioRequest("api-proposta"));
-        logger.info("Resultado da notificação: {}", resultado.getResultado());
-        if (resultado.getResultado().equals(FALHA)) {
+        try {
+            BloqueioResponse resultado = api.notificacaoDeBloqueio(
+                    cartao.getNumero(), new BloqueioRequest("api-proposta"));
+            logger.info("Resultado da notificação: {}", resultado.getResultado());
+        } catch (FeignException e) {
             throw new ResponseStatusException(UNPROCESSABLE_ENTITY, "Falha no sistema");
         }
     }
