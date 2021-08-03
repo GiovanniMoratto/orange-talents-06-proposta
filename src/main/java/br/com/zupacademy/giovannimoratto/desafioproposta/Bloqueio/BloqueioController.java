@@ -34,7 +34,7 @@ public class BloqueioController {
 
     @PostMapping("/cartoes/bloqueio/{id}")
     @Transactional
-    public ResponseEntity <?> bloquearCartao(@PathVariable Long id,
+    public ResponseEntity <?> solicitacaoDeBloqueio(@PathVariable Long id,
                                              @RequestHeader(value = "User-Agent") String userAgent,
                                              HttpServletRequest request) {
 
