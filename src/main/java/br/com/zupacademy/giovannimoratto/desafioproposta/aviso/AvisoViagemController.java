@@ -28,17 +28,12 @@ import static org.springframework.http.HttpStatus.UNPROCESSABLE_ENTITY;
 public class AvisoViagemController {
 
     private final Logger logger = LoggerFactory.getLogger(AvisoViagemController.class);
-    private final CartaoRepository cartaoRepository;
-    private final AvisoViagemRepository avisoViagemRepository;
-    private final CartoesFeignClient feignClient;
-
     @Autowired
-    public AvisoViagemController(CartaoRepository cartaoRepository, AvisoViagemRepository avisoViagemRepository,
-                                 CartoesFeignClient feignClient) {
-        this.cartaoRepository = cartaoRepository;
-        this.avisoViagemRepository = avisoViagemRepository;
-        this.feignClient = feignClient;
-    }
+    private CartaoRepository cartaoRepository;
+    @Autowired
+    private AvisoViagemRepository avisoViagemRepository;
+    @Autowired
+    private CartoesFeignClient feignClient;
 
     @PostMapping("/cartoes/aviso-viagem/{id}")
     public ResponseEntity <?> cadastraAvisoViagem(@PathVariable Long id,

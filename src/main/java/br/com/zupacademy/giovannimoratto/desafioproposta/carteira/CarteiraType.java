@@ -6,5 +6,5 @@ package br.com.zupacademy.giovannimoratto.desafioproposta.carteira;
 
 public enum CarteiraType {
     PAYPAL,
-    SAMSUNG_PLAY;
+    SAMSUNG_PLAY
 }

@@ -1,7 +1,6 @@
 package br.com.zupacademy.giovannimoratto.desafioproposta.carteira;
 
 import br.com.zupacademy.giovannimoratto.desafioproposta.cartao.CartaoModel;
-import com.fasterxml.jackson.annotation.JsonCreator;
 
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;

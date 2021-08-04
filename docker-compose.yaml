@@ -151,15 +151,18 @@ services:
       - 8082:8082
     container_name: docker-proposta
     environment:
-      - DB_HOST=mysql
-      - DB_PORT=3306
-      - DB_USER=root
-      - DB_PASSWORD=zup
-      - DB_NAME=db_proposta
-      - ANALISE_HOST=analise
-      - CONTAS_HOST=contas
-      - KEYCLOAK_ISSUER_URI:http://keycloak:8080/auth/realms/nosso-cartao
-      - KEYCLOAK_JWKS_URI:http://localhost:8080/auth/realms/nosso-cartao/protocol/openid-connect/certs
+      DB_HOST: mysql
+      DB_PORT: 3306
+      DB_USER: root
+      DB_PASSWORD: zup
+      DB_NAME: db_proposta
+      ANALISE_HOST: analise
+      CONTAS_HOST: contas
+      KEYCLOAK_ISSUER_URI: http://keycloak:8080/auth/realms/nosso-cartao
+      KEYCLOAK_JWKS_URI: http://keycloak:8080/auth/realms/nosso-cartao/protocol/openid-connect/certs
+      JAEGER_ENABLED: true
+      JAEGER_ENDPOINT: http://jaeger:14268/api/traces
+      JAEGER_SAMPLER: 1
     depends_on:
       - mysql
 

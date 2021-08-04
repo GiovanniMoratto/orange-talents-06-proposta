@@ -2,6 +2,8 @@ package br.com.zupacademy.giovannimoratto.desafioproposta.proposta;
 
 import br.com.zupacademy.giovannimoratto.desafioproposta.feign.SolicitacaoFeignClient;
 import feign.FeignException;
+import io.opentracing.Span;
+import io.opentracing.Tracer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,17 +31,21 @@ public class PropostaController {
     private final Logger logger = LoggerFactory.getLogger(PropostaController.class);
     private final PropostaRepository repository;
     private final SolicitacaoFeignClient feignClient;
+    private final Tracer tracer;
 
     @Autowired
-    public PropostaController(PropostaRepository repository, SolicitacaoFeignClient feignClient) {
+    public PropostaController(PropostaRepository repository, SolicitacaoFeignClient feignClient, Tracer tracer) {
         this.repository = repository;
         this.feignClient = feignClient;
+        this.tracer = tracer;
     }
 
     @PostMapping("/nova-proposta")
     @Transactional
     public ResponseEntity <?> cadastraProposta(@RequestBody @Valid PropostaRequest request,
                                                UriComponentsBuilder uriBuilder) {
+        Span activeSpan = tracer.activeSpan();
+        activeSpan.setTag("user.email", request.getEmail());
         logger.info("Requisição de proposta recebida e validada");
 
         PropostaModel novaProposta = request.toModel();

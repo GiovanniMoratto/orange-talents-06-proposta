@@ -6,6 +6,8 @@ import br.com.zupacademy.giovannimoratto.desafioproposta.feign.CartoesFeignClien
 import br.com.zupacademy.giovannimoratto.desafioproposta.feign.request.SolicitacaoInclusaoCarteira;
 import br.com.zupacademy.giovannimoratto.desafioproposta.feign.response.ResultadoCarteira;
 import feign.FeignException;
+import io.opentracing.Span;
+import io.opentracing.Tracer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,20 +35,24 @@ public class CarteiraController {
     private final CartaoRepository cartaoRepository;
     private final CarteiraRepository carteiraRepository;
     private final CartoesFeignClient feignClient;
+    private final Tracer tracer;
 
     @Autowired
     public CarteiraController(CartaoRepository cartaoRepository,
                               CarteiraRepository carteiraRepository,
-                              CartoesFeignClient feignClient) {
+                              CartoesFeignClient feignClient, Tracer tracer) {
         this.cartaoRepository = cartaoRepository;
         this.carteiraRepository = carteiraRepository;
         this.feignClient = feignClient;
+        this.tracer = tracer;
     }
 
     @PostMapping("/cartoes/carteira-digital/{id}")
     public ResponseEntity <?> associarCartaoEmCarteiraDigital(@PathVariable("id") Long id,
                                                               @RequestBody @Valid CarteiraRequest request,
                                                               UriComponentsBuilder uriComponentsBuilder) {
+        Span activeSpan = tracer.activeSpan();
+        activeSpan.setTag("user.email", request.getEmail());
         CartaoModel cartao = verificaSeCartaoExiste(id);
         logger.info("Cartão encontrado");
         logger.info("Requisição de carteira digital recebida e validada");

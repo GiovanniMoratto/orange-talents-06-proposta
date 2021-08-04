@@ -56,8 +56,7 @@ public class HandlerAdvice {
 
     @ExceptionHandler(HttpMessageNotReadableException.class)
     public ResponseEntity <ErroPadronizadoEnum> handleHttpMessageNotReadable(HttpMessageNotReadableException exception) {
-        String genericMessage = "Unacceptable JSON " + exception.getMessage();
-        String mensagens = genericMessage;
+        String mensagens = "Unacceptable JSON " + exception.getMessage();
         if (exception.getCause() instanceof InvalidFormatException) {
             InvalidFormatException ifx = (InvalidFormatException) exception.getCause();
             if (ifx.getTargetType().isEnum()) {

@@ -36,7 +36,7 @@ public class AssociaCartao {
 
     // Gera cartão e o associa à propostas elegivéis
     @Scheduled(fixedDelayString = "${scheduled-cartao.time}")
-    private void autoAssociaCartao() {
+    public void autoAssociaCartao() {
         logger.info("Buscando propostas...");
         List <PropostaModel> propostas = repository.findByStatusAndCartao(ELEGIVEL, null);
         logger.info("{} propostas elegiveis encontradas.", propostas.size());

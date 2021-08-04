@@ -45,4 +45,9 @@ public class PropostaRequest {
         return new PropostaModel(documento, email, nome, endereco, salario);
     }
 
+    /* Getters */
+    public String getEmail() {
+        return email;
+    }
+
 }

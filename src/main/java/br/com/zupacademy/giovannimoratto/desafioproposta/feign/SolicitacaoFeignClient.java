@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.RequestBody;
  * @Author giovanni.moratto
  */
 
-@FeignClient(url = "${solicitacao-analise-resource}", name = "analise")
+@FeignClient(url = "${solicitacao-analise-resource}", name = "analises")
 public interface SolicitacaoFeignClient {
 
     @PostMapping
