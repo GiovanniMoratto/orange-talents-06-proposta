@@ -1,7 +1,6 @@
 package br.com.zupacademy.giovannimoratto.desafioproposta.bloqueio;
 
 import br.com.zupacademy.giovannimoratto.desafioproposta.cartao.CartaoModel;
-import com.fasterxml.jackson.annotation.JsonBackReference;
 import org.hibernate.annotations.CreationTimestamp;
 
 import javax.persistence.*;
@@ -35,8 +34,7 @@ public class BloqueioModel {
     @Column(nullable = false)
     private LocalDateTime bloqueadoEm;
     @NotNull
-    @JsonBackReference
-    @OneToOne(cascade = CascadeType.MERGE, fetch = FetchType.EAGER)
+    @OneToOne(cascade = CascadeType.MERGE)
     @JoinColumn(nullable = false)
     private CartaoModel cartao;
     private boolean ativo = false;

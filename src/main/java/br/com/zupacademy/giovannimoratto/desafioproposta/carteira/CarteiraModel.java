@@ -1,6 +1,7 @@
 package br.com.zupacademy.giovannimoratto.desafioproposta.carteira;
 
 import br.com.zupacademy.giovannimoratto.desafioproposta.cartao.CartaoModel;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 
 import javax.persistence.*;
 
@@ -21,6 +22,7 @@ public class CarteiraModel {
     private String email;
     @Enumerated(EnumType.STRING)
     private CarteiraType carteira;
+    @JsonBackReference
     @ManyToOne
     private CartaoModel cartao;
     private String numero;

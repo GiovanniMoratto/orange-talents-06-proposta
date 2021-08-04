@@ -8,7 +8,6 @@ import br.com.zupacademy.giovannimoratto.desafioproposta.feign.response.Resultad
 import feign.FeignException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
@@ -28,12 +27,16 @@ import static org.springframework.http.HttpStatus.UNPROCESSABLE_ENTITY;
 public class AvisoViagemController {
 
     private final Logger logger = LoggerFactory.getLogger(AvisoViagemController.class);
-    @Autowired
-    private CartaoRepository cartaoRepository;
-    @Autowired
-    private AvisoViagemRepository avisoViagemRepository;
-    @Autowired
-    private CartoesFeignClient feignClient;
+    private final CartaoRepository cartaoRepository;
+    private final AvisoViagemRepository avisoViagemRepository;
+    private final CartoesFeignClient feignClient;
+
+    public AvisoViagemController(CartaoRepository cartaoRepository, AvisoViagemRepository avisoViagemRepository,
+                                 CartoesFeignClient feignClient) {
+        this.cartaoRepository = cartaoRepository;
+        this.avisoViagemRepository = avisoViagemRepository;
+        this.feignClient = feignClient;
+    }
 
     @PostMapping("/cartoes/aviso-viagem/{id}")
     public ResponseEntity <?> cadastraAvisoViagem(@PathVariable Long id,

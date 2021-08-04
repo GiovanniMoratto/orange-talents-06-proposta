@@ -1,5 +1,8 @@
 package br.com.zupacademy.giovannimoratto.desafioproposta.proposta;
 
+import br.com.zupacademy.giovannimoratto.desafioproposta.criptografia.Encryptor;
+
+import javax.persistence.Convert;
 import java.math.BigDecimal;
 
 /**
@@ -9,6 +12,7 @@ import java.math.BigDecimal;
 public class PropostaResponse {
 
     /* Attributes */
+    @Convert(converter = Encryptor.class)
     private final String documento;
     private final String email;
     private final String nome;

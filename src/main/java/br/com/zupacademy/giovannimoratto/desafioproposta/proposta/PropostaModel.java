@@ -1,8 +1,8 @@
 package br.com.zupacademy.giovannimoratto.desafioproposta.proposta;
 
 import br.com.zupacademy.giovannimoratto.desafioproposta.cartao.CartaoModel;
+import br.com.zupacademy.giovannimoratto.desafioproposta.criptografia.Encryptor;
 import br.com.zupacademy.giovannimoratto.desafioproposta.feign.request.NovoCartao;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
@@ -21,6 +21,7 @@ public class PropostaModel {
     @Id
     @GeneratedValue(strategy = IDENTITY)
     private Long id;
+    @Convert(converter = Encryptor.class)
     @Column(nullable = false, unique = true)
     private String documento;
     @Column(nullable = false)
@@ -33,8 +34,7 @@ public class PropostaModel {
     private BigDecimal salario;
     @Enumerated(EnumType.STRING)
     private PropostaStatus status;
-    @JsonManagedReference
-    @OneToOne(cascade = CascadeType.MERGE, fetch = FetchType.EAGER)
+    @OneToOne(cascade = CascadeType.MERGE)
     @JoinColumn(unique = true)
     private CartaoModel cartao;
 

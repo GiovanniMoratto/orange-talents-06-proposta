@@ -1,14 +1,12 @@
 package br.com.zupacademy.giovannimoratto.desafioproposta.cartao;
 
 import br.com.zupacademy.giovannimoratto.desafioproposta.biometria.BiometriaModel;
-import br.com.zupacademy.giovannimoratto.desafioproposta.bloqueio.BloqueioModel;
 import br.com.zupacademy.giovannimoratto.desafioproposta.proposta.PropostaModel;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
-import java.util.HashSet;
 import java.util.Set;
 
 import static br.com.zupacademy.giovannimoratto.desafioproposta.cartao.CartaoStatus.ATIVO;
@@ -35,11 +33,8 @@ public class CartaoModel {
     @OneToOne(mappedBy = "cartao")
     private PropostaModel proposta;
     @JsonManagedReference
-    @OneToMany(mappedBy = "cartao", cascade = CascadeType.MERGE, fetch = FetchType.EAGER)
-    private final Set <BiometriaModel> biometrias = new HashSet <>();
-    @JsonManagedReference
-    @OneToOne(mappedBy = "cartao")
-    private BloqueioModel bloqueio;
+    @OneToMany(mappedBy = "cartao")
+    private Set <BiometriaModel> biometrias;
     @Enumerated(EnumType.STRING)
     private CartaoStatus status = ATIVO;
 
@@ -91,11 +86,8 @@ public class CartaoModel {
         return biometrias;
     }
 
-    public BloqueioModel getBloqueio() {
-        return bloqueio;
-    }
-
     public CartaoStatus getStatus() {
         return status;
     }
+
 }
