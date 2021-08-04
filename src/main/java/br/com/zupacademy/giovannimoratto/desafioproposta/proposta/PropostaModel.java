@@ -1,7 +1,7 @@
 package br.com.zupacademy.giovannimoratto.desafioproposta.proposta;
 
 import br.com.zupacademy.giovannimoratto.desafioproposta.cartao.CartaoModel;
-import br.com.zupacademy.giovannimoratto.desafioproposta.criptografia.Encryptor;
+import br.com.zupacademy.giovannimoratto.desafioproposta.core.security.Encryptor;
 import br.com.zupacademy.giovannimoratto.desafioproposta.feign.request.NovoCartao;
 
 import javax.persistence.*;

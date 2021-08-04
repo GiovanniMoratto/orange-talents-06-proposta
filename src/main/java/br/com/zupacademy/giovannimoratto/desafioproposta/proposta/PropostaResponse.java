@@ -1,6 +1,6 @@
 package br.com.zupacademy.giovannimoratto.desafioproposta.proposta;
 
-import br.com.zupacademy.giovannimoratto.desafioproposta.criptografia.Encryptor;
+import br.com.zupacademy.giovannimoratto.desafioproposta.core.security.Encryptor;
 
 import javax.persistence.Convert;
 import java.math.BigDecimal;

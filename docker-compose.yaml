@@ -147,7 +147,7 @@ services:
       - 3307:3306
 
   app-proposta:
-    image: giovanni-moratto/ot6-proposta:0.0.8-SNAPSHOT
+    image: giovanni-moratto/ot6-proposta:0.0.9-SNAPSHOT
     ports:
       - 8082:8082
     container_name: docker-proposta
@@ -161,7 +161,7 @@ services:
       CONTAS_HOST: contas
       KEYCLOAK_ISSUER_URI: http://keycloak:8080/auth/realms/nosso-cartao
       KEYCLOAK_JWKS_URI: http://keycloak:8080/auth/realms/nosso-cartao/protocol/openid-connect/certs
-      JAEGER_ENABLED: true
+      JAEGER_ENABLED:
       JAEGER_ENDPOINT: http://jaeger:14268/api/traces
       JAEGER_SAMPLER: 1
       CRIPTOGRAFIA_SECRET: gn+dQXeGG/s&!,YF+8s|w&s0A}WGj4/Qs<U9ppNsBJd=%6J;c)[#JGIiwjpSs!Mq
