@@ -17,7 +17,7 @@ import static javax.persistence.GenerationType.IDENTITY;
 
 @Entity
 @Table(name = "tb_avisos_de_viagem")
-public class AvisoModel {
+public class AvisoViagemModel {
 
     /* Attributes */
     @Id
@@ -37,13 +37,17 @@ public class AvisoModel {
     @NotNull
     @Valid
     @ManyToOne
+    @JoinColumn(nullable = false)
     private CartaoModel cartao;
 
+    /* Constructors */
     @Deprecated
-    public AvisoModel() {
+    public AvisoViagemModel() {
     }
 
-    public AvisoModel(String destino, LocalDate validoAte, String ipClient, String userAgent, CartaoModel cartao) {
+    // Defini os valores do método da AvisoViagemRequest.class em AvisoViagemModel.class
+    public AvisoViagemModel(String destino, LocalDate validoAte, String ipClient, String userAgent,
+                            CartaoModel cartao) {
         this.destino = destino;
         this.validoAte = validoAte;
         this.ipClient = ipClient;
@@ -51,4 +55,32 @@ public class AvisoModel {
         this.cartao = cartao;
     }
 
+    /* Getters */
+    public Long getId() {
+        return id;
+    }
+
+    public String getDestino() {
+        return destino;
+    }
+
+    public LocalDate getValidoAte() {
+        return validoAte;
+    }
+
+    public LocalDateTime getDataCriacao() {
+        return dataCriacao;
+    }
+
+    public String getIpClient() {
+        return ipClient;
+    }
+
+    public String getUserAgent() {
+        return userAgent;
+    }
+
+    public CartaoModel getCartao() {
+        return cartao;
+    }
 }

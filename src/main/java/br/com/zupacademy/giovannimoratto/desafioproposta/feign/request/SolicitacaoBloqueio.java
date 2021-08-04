@@ -1,4 +1,4 @@
-package br.com.zupacademy.giovannimoratto.desafioproposta.Bloqueio;
+package br.com.zupacademy.giovannimoratto.desafioproposta.feign.request;
 
 import javax.validation.constraints.NotBlank;
 
@@ -6,16 +6,20 @@ import javax.validation.constraints.NotBlank;
  * @Author giovanni.moratto
  */
 
-public class BloqueioClientRequest {
+public class SolicitacaoBloqueio {
 
+    /* Attributes */
     @NotBlank
     private final String sistemaResponsavel;
 
-    public BloqueioClientRequest(String sistemaResponsavel) {
+    /* Constructors */
+    public SolicitacaoBloqueio(String sistemaResponsavel) {
         this.sistemaResponsavel = sistemaResponsavel;
     }
 
+    /* Getters */
     public String getSistemaResponsavel() {
         return sistemaResponsavel;
     }
+
 }

@@ -30,6 +30,7 @@ public class BiometriaModel {
     @JoinColumn(nullable = false)
     private CartaoModel cartao;
     @CreationTimestamp
+    @Column(nullable = false)
     private LocalDateTime associadaEm;
 
     /* Constructors */
@@ -37,6 +38,7 @@ public class BiometriaModel {
     public BiometriaModel() {
     }
 
+    // Defini os valores do método da BiometriaRequest.class em BiometriaModel.class
     public BiometriaModel(String fingerprint, CartaoModel cartao) {
         this.fingerprint = fingerprint;
         this.cartao = cartao;

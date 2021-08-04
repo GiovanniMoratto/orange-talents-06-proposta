@@ -25,28 +25,40 @@ import static org.springframework.http.HttpStatus.NOT_FOUND;
 public class BiometriaController {
 
     private final Logger logger = LoggerFactory.getLogger(BiometriaController.class);
+    private final CartaoRepository cartaoRepository;
+    private final BiometriaRepository biometriaRepository;
 
     @Autowired
-    private CartaoRepository cartaoRepository;
-    @Autowired
-    private BiometriaRepository repository;
+    public BiometriaController(CartaoRepository cartaoRepository, BiometriaRepository biometriaRepository) {
+        this.cartaoRepository = cartaoRepository;
+        this.biometriaRepository = biometriaRepository;
+    }
 
-    @PostMapping("/nova-biometria/{id}")
+    @PostMapping("/cartoes/nova-biometria/{id}")
     @Transactional
     public ResponseEntity <?> cadastraBiometria(@PathVariable("id") Long id,
                                                 @RequestBody @Valid BiometriaRequest request,
                                                 UriComponentsBuilder uriBuilder) {
-        logger.info("Buscando cartão por ID...");
-        CartaoModel cartao = cartaoRepository.findById(id).orElseThrow(() ->
-                new ResponseStatusException(NOT_FOUND, "Este cartão não existe"));
-        logger.info("Cartão de ID: {} encontrado.", cartao.getId());
+        CartaoModel cartao = verificaSeCartaoExiste(id);
+        logger.info("Cartão encontrado");
         logger.info("Requisição de biometria recebida e validada");
+
         BiometriaModel novaBiometria = request.toModel(cartao);
-        logger.info("Requisição de biometria convertida em classe de dominio");
-        repository.save(novaBiometria);
+        logger.info("Requisição de biometria convertida em classe de domínio");
+
+        biometriaRepository.save(novaBiometria);
         logger.info("Biometria persistida no banco de dados");
+
         URI uri = uriBuilder.path("/biometria/{id}").buildAndExpand(novaBiometria.getId()).toUri();
+
         return ResponseEntity.created(uri).build();
+    }
+
+    private CartaoModel verificaSeCartaoExiste(Long id) {
+        logger.info("Buscando cartão por ID...");
+
+        return cartaoRepository.findById(id).orElseThrow(() ->
+                new ResponseStatusException(NOT_FOUND, "Este cartão não existe"));
     }
 
 }

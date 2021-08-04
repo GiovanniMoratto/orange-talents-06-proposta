@@ -1,10 +1,11 @@
-package br.com.zupacademy.giovannimoratto.desafioproposta.Bloqueio;
+package br.com.zupacademy.giovannimoratto.desafioproposta.bloqueio;
 
 import br.com.zupacademy.giovannimoratto.desafioproposta.cartao.CartaoModel;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import org.hibernate.annotations.CreationTimestamp;
 
 import javax.persistence.*;
+import javax.servlet.http.HttpServletRequest;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import java.time.LocalDateTime;
@@ -17,35 +18,43 @@ import java.time.LocalDateTime;
 @Table(name = "tb_bloqueios")
 public class BloqueioModel {
 
+    /* Attributes */
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @NotBlank
+    @Column(nullable = false)
     private String numero;
     @NotBlank
+    @Column(nullable = false)
     private String ipCliente;
     @NotBlank
+    @Column(nullable = false)
     private String userAgent;
     @CreationTimestamp
+    @Column(nullable = false)
     private LocalDateTime bloqueadoEm;
     @NotNull
     @JsonBackReference
     @OneToOne(cascade = CascadeType.MERGE, fetch = FetchType.EAGER)
+    @JoinColumn(nullable = false)
     private CartaoModel cartao;
     private boolean ativo = false;
 
+    /* Constructors */
     @Deprecated
     public BloqueioModel() {
     }
 
-    public BloqueioModel(String ipCliente, String userAgent, String numero, CartaoModel cartao) {
-        this.ipCliente = ipCliente;
+    public BloqueioModel(HttpServletRequest request, String userAgent, CartaoModel cartao) {
+        this.ipCliente = request.getRemoteAddr();
         this.userAgent = userAgent;
-        this.numero = numero;
+        this.numero = cartao.getNumero();
         this.cartao = cartao;
         this.ativo = true;
     }
 
+    /* Getters */
     public Long getId() {
         return id;
     }
@@ -73,4 +82,5 @@ public class BloqueioModel {
     public boolean isAtivo() {
         return ativo;
     }
+
 }

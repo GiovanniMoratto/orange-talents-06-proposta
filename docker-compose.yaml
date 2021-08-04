@@ -158,6 +158,8 @@ services:
       - DB_NAME=db_proposta
       - ANALISE_HOST=analise
       - CONTAS_HOST=contas
+      - KEYCLOAK_ISSUER_URI:http://keycloak:8080/auth/realms/nosso-cartao
+      - KEYCLOAK_JWKS_URI:http://localhost:8080/auth/realms/nosso-cartao/protocol/openid-connect/certs
     depends_on:
       - mysql
 

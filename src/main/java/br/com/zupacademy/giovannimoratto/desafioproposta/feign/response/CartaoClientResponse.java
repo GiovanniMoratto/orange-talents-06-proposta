@@ -1,4 +1,4 @@
-package br.com.zupacademy.giovannimoratto.desafioproposta.cartao;
+package br.com.zupacademy.giovannimoratto.desafioproposta.feign.response;
 
 import br.com.zupacademy.giovannimoratto.desafioproposta.cartao.CartaoModel;
 import br.com.zupacademy.giovannimoratto.desafioproposta.proposta.PropostaModel;
@@ -34,8 +34,25 @@ public class CartaoClientResponse {
         return new CartaoModel(numero, emitidoEm, titular, limite, proposta);
     }
 
+    /* Getters */
     public String getNumero() {
         return numero;
+    }
+
+    public LocalDateTime getEmitidoEm() {
+        return emitidoEm;
+    }
+
+    public String getTitular() {
+        return titular;
+    }
+
+    public Integer getLimite() {
+        return limite;
+    }
+
+    public String getIdProposta() {
+        return idProposta;
     }
 
 }

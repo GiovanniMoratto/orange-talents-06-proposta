@@ -1,7 +1,7 @@
 package br.com.zupacademy.giovannimoratto.desafioproposta.cartao;
 
-import br.com.zupacademy.giovannimoratto.desafioproposta.Bloqueio.BloqueioModel;
 import br.com.zupacademy.giovannimoratto.desafioproposta.biometria.BiometriaModel;
+import br.com.zupacademy.giovannimoratto.desafioproposta.bloqueio.BloqueioModel;
 import br.com.zupacademy.giovannimoratto.desafioproposta.proposta.PropostaModel;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
@@ -36,7 +36,7 @@ public class CartaoModel {
     private PropostaModel proposta;
     @JsonManagedReference
     @OneToMany(mappedBy = "cartao", cascade = CascadeType.MERGE, fetch = FetchType.EAGER)
-    private Set <BiometriaModel> biometrias = new HashSet <>();
+    private final Set <BiometriaModel> biometrias = new HashSet <>();
     @JsonManagedReference
     @OneToOne(mappedBy = "cartao")
     private BloqueioModel bloqueio;
@@ -48,6 +48,7 @@ public class CartaoModel {
     public CartaoModel() {
     }
 
+    // Defini os valores do método da CartaoClientResponse.class em CartaoModel.class
     public CartaoModel(String numero, LocalDateTime emitidoEm, String titular, Integer limite, PropostaModel proposta) {
         this.numero = numero;
         this.emitidoEm = emitidoEm;
@@ -62,16 +63,36 @@ public class CartaoModel {
     }
 
     /* Getters */
-    public PropostaModel getProposta() {
-        return proposta;
-    }
-
     public Long getId() {
         return id;
     }
 
     public String getNumero() {
         return numero;
+    }
+
+    public LocalDateTime getEmitidoEm() {
+        return emitidoEm;
+    }
+
+    public String getTitular() {
+        return titular;
+    }
+
+    public Integer getLimite() {
+        return limite;
+    }
+
+    public PropostaModel getProposta() {
+        return proposta;
+    }
+
+    public Set <BiometriaModel> getBiometrias() {
+        return biometrias;
+    }
+
+    public BloqueioModel getBloqueio() {
+        return bloqueio;
     }
 
     public CartaoStatus getStatus() {

@@ -6,5 +6,5 @@ package br.com.zupacademy.giovannimoratto.desafioproposta.cartao;
 
 public enum CartaoStatus {
     BLOQUEADO,
-    ATIVO;
+    ATIVO
 }

@@ -1,4 +1,4 @@
-package br.com.zupacademy.giovannimoratto.desafioproposta.Bloqueio;
+package br.com.zupacademy.giovannimoratto.desafioproposta.feign.response;
 
 /**
  * @Author giovanni.moratto
@@ -6,5 +6,5 @@ package br.com.zupacademy.giovannimoratto.desafioproposta.Bloqueio;
 
 public enum BloqueioStatus {
     BLOQUEADO,
-    FALHA;
+    FALHA
 }

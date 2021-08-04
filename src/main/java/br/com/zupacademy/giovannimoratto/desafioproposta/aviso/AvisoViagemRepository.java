@@ -8,5 +8,6 @@ import org.springframework.stereotype.Repository;
  */
 
 @Repository
-public interface AvisoRepository extends JpaRepository <AvisoModel, Long> {
+public interface AvisoViagemRepository extends JpaRepository <AvisoViagemModel, Long> {
+
 }

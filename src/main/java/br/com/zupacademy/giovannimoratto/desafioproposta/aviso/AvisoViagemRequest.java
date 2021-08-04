@@ -13,25 +13,30 @@ import java.time.LocalDate;
  * @Author giovanni.moratto
  */
 
-public class AvisoRequest {
+public class AvisoViagemRequest {
 
+    /* Attributes */
     @NotBlank
     private final String destino;
     @NotNull
     @Future
     private final LocalDate validoAte;
 
-    public AvisoRequest(String destino, LocalDate validoAte) {
+    /* Constructors */
+    public AvisoViagemRequest(String destino, LocalDate validoAte) {
         this.destino = destino;
         this.validoAte = validoAte;
     }
 
-    public AvisoModel toModel(CartaoModel cartao, HttpServletRequest httpRequest) {
+    /* Methods */
+    public AvisoViagemModel toModel(CartaoModel cartao, HttpServletRequest httpRequest) {
         String userAgent = httpRequest.getHeader(HttpHeaders.USER_AGENT);
         String ipClient = httpRequest.getRemoteAddr();
-        return new AvisoModel(destino, validoAte, ipClient, userAgent, cartao);
+
+        return new AvisoViagemModel(destino, validoAte, ipClient, userAgent, cartao);
     }
 
+    /* Getters */
     public String getDestino() {
         return destino;
     }

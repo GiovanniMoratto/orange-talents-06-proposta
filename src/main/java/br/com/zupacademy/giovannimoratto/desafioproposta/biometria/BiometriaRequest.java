@@ -18,7 +18,7 @@ public class BiometriaRequest {
 
     /* Constructors */
     @Deprecated
-    public BiometriaRequest(){
+    public BiometriaRequest() {
     }
 
     public BiometriaRequest(String fingerprint) {

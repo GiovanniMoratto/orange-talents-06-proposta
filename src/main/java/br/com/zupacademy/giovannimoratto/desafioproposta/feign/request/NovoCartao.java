@@ -1,4 +1,4 @@
-package br.com.zupacademy.giovannimoratto.desafioproposta.proposta;
+package br.com.zupacademy.giovannimoratto.desafioproposta.feign.request;
 
 import javax.validation.constraints.NotBlank;
 
@@ -6,7 +6,7 @@ import javax.validation.constraints.NotBlank;
  * @Author giovanni.moratto
  */
 
-public class AnaliseClientRequest {
+public class NovoCartao {
 
     /* Attributes */
     @NotBlank
@@ -17,7 +17,7 @@ public class AnaliseClientRequest {
     private final String idProposta;
 
     /* Constructors */
-    public AnaliseClientRequest(String documento, String nome, String idProposta) {
+    public NovoCartao(String documento, String nome, String idProposta) {
         this.documento = documento;
         this.nome = nome;
         this.idProposta = idProposta;

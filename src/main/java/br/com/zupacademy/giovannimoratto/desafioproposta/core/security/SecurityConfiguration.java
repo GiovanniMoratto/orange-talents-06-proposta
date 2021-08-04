@@ -20,20 +20,11 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.authorizeRequests(authorizeRequests -> authorizeRequests
-                        .antMatchers(GET, "/actuator/**")
-                        .permitAll()
-
-                        .antMatchers(GET, "/api/proposta/**")
-                        .hasAuthority("SCOPE_propostas:read")
-
-                        .antMatchers(GET, "/api/cartoes/**")
-                        .hasAuthority("SCOPE_cartoes:read")
-
-                        .antMatchers(POST, "/api/cartoes/**")
-                        .hasAuthority("SCOPE_cartoes:write")
-
-                        .antMatchers(POST, "/api/nova-proposta")
-                        .hasAuthority("SCOPE_propostas:write")
+                        .antMatchers(GET, "/actuator/**").permitAll()
+                        .antMatchers(POST, "/api/nova-proposta").hasAuthority("SCOPE_propostas:write")
+                        .antMatchers(GET, "/api/proposta/**").hasAuthority("SCOPE_propostas:read")
+                        .antMatchers(POST, "/api/cartoes/**").hasAuthority("SCOPE_cartoes:write")
+                        .antMatchers(GET, "/api/cartoes/**").hasAuthority("SCOPE_cartoes:read")
                         .anyRequest().authenticated())
                 .oauth2ResourceServer(OAuth2ResourceServerConfigurer::jwt);
     }

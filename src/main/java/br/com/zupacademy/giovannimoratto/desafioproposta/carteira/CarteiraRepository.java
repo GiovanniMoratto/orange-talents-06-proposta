@@ -1,4 +1,4 @@
-package br.com.zupacademy.giovannimoratto.desafioproposta.Bloqueio;
+package br.com.zupacademy.giovannimoratto.desafioproposta.carteira;
 
 import br.com.zupacademy.giovannimoratto.desafioproposta.cartao.CartaoModel;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -11,9 +11,7 @@ import java.util.Optional;
  */
 
 @Repository
-public interface BloqueioRepository extends JpaRepository <BloqueioModel, Long> {
+public interface CarteiraRepository extends JpaRepository <CarteiraModel, Long> {
 
-
-    Optional <BloqueioModel> findByCartao(CartaoModel cartao);
-
+    Optional <CarteiraModel> findByCartaoAndCarteira(CartaoModel cartao, CarteiraType carteira);
 }
